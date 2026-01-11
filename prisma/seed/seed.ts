@@ -97,6 +97,14 @@ async function createBranch(
 async function main() {
   console.log('Seeding database...')
 
+  // Create or get default site settings
+  await prisma.siteSettings.upsert({
+    where: { id: 'default' },
+    update: {},
+    create: { id: 'default' }
+  })
+  console.log('Created/verified site settings')
+
   // Get or create active iteration
   let iteration = await prisma.iteration.findFirst({
     where: { isActive: true }

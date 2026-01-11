@@ -1,19 +1,21 @@
 import Link from 'next/link'
 import { getActiveIteration, getAllIterations } from '@/lib/iterations'
+import { getSiteSettings } from '@/lib/settings'
 
 export default async function Home() {
   const activeIteration = await getActiveIteration()
   const allIterations = await getAllIterations()
   const pastIterations = allIterations.filter(i => !i.isActive)
+  const settings = await getSiteSettings()
 
   return (
     <div className="min-h-screen bg-background">
       <main className="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <header className="mb-16 text-center">
-          <h1 className="text-6xl font-serif text-foreground mb-4">Offsets</h1>
+          <h1 className="text-6xl font-serif text-foreground mb-4">{settings.heroTitle}</h1>
           <p className="text-xl text-purple-dark max-w-2xl mx-auto">
-            A collaborative literary project where nodes of creative writing branch and grow like a tree
+            {settings.heroSubtitle}
           </p>
         </header>
 
@@ -52,34 +54,34 @@ export default async function Home() {
 
         {/* How It Works */}
         <section className="mb-16">
-          <h2 className="text-3xl font-serif text-foreground mb-6 text-center">How It Works</h2>
+          <h2 className="text-3xl font-serif text-foreground mb-6 text-center">{settings.howItWorksTitle}</h2>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-              <h3 className="text-xl font-medium text-foreground mb-3">1. Read & Respond</h3>
+              <h3 className="text-xl font-medium text-foreground mb-3">{settings.step1Title}</h3>
               <p className="text-purple-dark">
-                Browse live nodes and respond with your own creative writing. Your response can be any length and connect to the parent node through linguistic, conceptual, formal, or stylistic links.
+                {settings.step1Description}
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-              <h3 className="text-xl font-medium text-foreground mb-3">2. Stay Anonymous</h3>
+              <h3 className="text-xl font-medium text-foreground mb-3">{settings.step2Title}</h3>
               <p className="text-purple-dark">
-                Your name stays hidden until your node "withers" - when it receives no responses for 3 days. This keeps the focus on the writing itself.
+                {settings.step2Description}
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-              <h3 className="text-xl font-medium text-foreground mb-3">3. Branch & Grow</h3>
+              <h3 className="text-xl font-medium text-foreground mb-3">{settings.step3Title}</h3>
               <p className="text-purple-dark">
-                Each response creates a new branch in the tree. Multiple people can respond to the same node, creating a network of interconnected creative writing.
+                {settings.step3Description}
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-              <h3 className="text-xl font-medium text-foreground mb-3">4. Admin Approval</h3>
+              <h3 className="text-xl font-medium text-foreground mb-3">{settings.step4Title}</h3>
               <p className="text-purple-dark">
-                All submissions are reviewed before publishing to maintain quality and intention. Once approved, your node goes live immediately.
+                {settings.step4Description}
               </p>
             </div>
           </div>
@@ -87,28 +89,28 @@ export default async function Home() {
 
         {/* Rules */}
         <section className="mb-16 bg-white p-8 rounded-lg shadow border border-gray-light">
-          <h2 className="text-3xl font-serif text-foreground mb-6">The Rules</h2>
+          <h2 className="text-3xl font-serif text-foreground mb-6">{settings.rulesTitle}</h2>
 
           <ul className="space-y-4 text-purple-dark">
             <li className="flex gap-3">
               <span className="text-purple-dark font-bold">•</span>
-              <span><strong>Any length:</strong> Your node can be a single word or a lengthy piece - there's no character limit.</span>
+              <span>{settings.rule1}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-purple-dark font-bold">•</span>
-              <span><strong>Any connection:</strong> Link to your parent node however you see fit - thematically, formally, linguistically, or conceptually.</span>
+              <span>{settings.rule2}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-purple-dark font-bold">•</span>
-              <span><strong>Withering period:</strong> If a live node receives no responses for 3 days, it "withers" and the author's name is revealed.</span>
+              <span>{settings.rule3}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-purple-dark font-bold">•</span>
-              <span><strong>No responses to withered nodes:</strong> Once a node has withered, it can no longer receive new responses.</span>
+              <span>{settings.rule4}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-purple-dark font-bold">•</span>
-              <span><strong>Submit your name:</strong> Enter your name with each submission - it will be revealed when your node withers.</span>
+              <span>{settings.rule5}</span>
             </li>
           </ul>
         </section>

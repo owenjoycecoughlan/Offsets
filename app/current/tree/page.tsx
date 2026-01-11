@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { getActiveIteration } from '@/lib/iterations'
+import TreeView from '@/components/TreeView'
 
 export default async function CurrentTreeViewPage() {
   const activeIteration = await getActiveIteration()
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <Link href="/" className="text-purple-dark hover:text-foreground">
             ← Back to home
@@ -39,18 +40,7 @@ export default async function CurrentTreeViewPage() {
           </div>
         </header>
 
-        <div className="bg-white p-12 rounded-lg shadow border border-gray-light text-center">
-          <h2 className="text-2xl font-serif text-foreground mb-4">Tree View Coming Soon</h2>
-          <p className="text-purple-muted mb-6">
-            Interactive tree visualization will be implemented here
-          </p>
-          <Link
-            href="/current"
-            className="inline-block px-6 py-3 bg-purple-dark text-white rounded-lg hover:bg-foreground transition-colors"
-          >
-            View List for Now
-          </Link>
-        </div>
+        <TreeView iterationId={activeIteration.id} />
       </main>
     </div>
   )

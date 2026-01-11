@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const query = searchParams.get('q')
-    const statusFilter = searchParams.get('status') as NodeStatus | null
+    const statusFilter = searchParams.get('status') as NodeStatus | 'ALL' | null
 
     if (!query) {
       return NextResponse.json(

@@ -13,6 +13,21 @@ const prisma = new PrismaClient({ adapter })
 async function main() {
   console.log('Seeding database...')
 
+  // Get or create active iteration
+  let iteration = await prisma.iteration.findFirst({
+    where: { isActive: true }
+  })
+
+  if (!iteration) {
+    iteration = await prisma.iteration.create({
+      data: {
+        name: 'Iteration 1',
+        description: 'The first iteration of Offsets',
+      }
+    })
+    console.log('Created iteration:', iteration.id)
+  }
+
   // Create a root node
   const rootNode = await prisma.node.create({
     data: {
@@ -24,6 +39,11 @@ In this garden of words, we plant seeds that grow in unexpected directions. Each
 Begin anywhere. Link to anything. Let the connections surprise us.`,
       status: NodeStatus.LIVE,
       publishedAt: new Date(),
+      iteration: {
+        connect: {
+          id: iteration.id
+        }
+      }
     },
   })
 

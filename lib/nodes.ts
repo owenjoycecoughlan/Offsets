@@ -1,15 +1,19 @@
 import { prisma } from './prisma'
 import { NodeStatus } from '@prisma/client'
+import { getActiveIteration } from './iterations'
 
 const DAYS_UNTIL_WITHERED = 3
 
 /**
- * Get all live nodes (published and can receive responses)
+ * Get all live nodes (published and can receive responses) in the active iteration
  */
 export async function getLiveNodes() {
+  const activeIteration = await getActiveIteration()
+
   return await prisma.node.findMany({
     where: {
       status: NodeStatus.LIVE,
+      iterationId: activeIteration.id,
     },
     orderBy: {
       publishedAt: 'desc',
@@ -61,12 +65,15 @@ export async function getNodeAncestry(id: string): Promise<any[]> {
 }
 
 /**
- * Get all pending nodes (awaiting approval)
+ * Get all pending nodes (awaiting approval) in the active iteration
  */
 export async function getPendingNodes() {
+  const activeIteration = await getActiveIteration()
+
   return await prisma.node.findMany({
     where: {
       status: NodeStatus.PENDING,
+      iterationId: activeIteration.id,
     },
     orderBy: {
       createdAt: 'asc',
@@ -109,12 +116,15 @@ export function shouldNodeWither(node: {
 }
 
 /**
- * Process withering for all eligible nodes
+ * Process withering for all eligible nodes in the active iteration
  */
 export async function processWithering() {
+  const activeIteration = await getActiveIteration()
+
   const liveNodes = await prisma.node.findMany({
     where: {
       status: NodeStatus.LIVE,
+      iterationId: activeIteration.id,
     },
   })
 

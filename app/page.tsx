@@ -65,6 +65,12 @@ export default async function Home() {
             Search Nodes
           </Link>
           <Link
+            href="/iterations"
+            className="text-sm text-purple-muted hover:text-purple-dark underline"
+          >
+            Browse Iterations
+          </Link>
+          <Link
             href="/stats"
             className="text-sm text-purple-muted hover:text-purple-dark underline"
           >

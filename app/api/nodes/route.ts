@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { NodeStatus } from '@prisma/client'
 import { sendNewSubmissionEmail } from '@/lib/email'
+import { getActiveIteration } from '@/lib/iterations'
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,6 +23,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Get active iteration
+    const activeIteration = await getActiveIteration()
 
     // If parentId is provided, verify it exists and is live
     if (parentId) {
@@ -51,6 +55,7 @@ export async function POST(request: NextRequest) {
         content: content.trim(),
         parentId: parentId || null,
         status: NodeStatus.PENDING,
+        iterationId: activeIteration.id,
       },
     })
 

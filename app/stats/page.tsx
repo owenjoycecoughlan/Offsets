@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { NodeStatus } from '@prisma/client'
+import { getActiveIteration } from '@/lib/iterations'
 
 async function getStatistics() {
+  const activeIteration = await getActiveIteration()
+
   const [
     totalNodes,
     liveNodes,
@@ -17,6 +20,7 @@ async function getStatistics() {
         status: {
           in: [NodeStatus.LIVE, NodeStatus.WITHERED],
         },
+        iterationId: activeIteration.id,
       },
     }),
 
@@ -24,6 +28,7 @@ async function getStatistics() {
     prisma.node.count({
       where: {
         status: NodeStatus.LIVE,
+        iterationId: activeIteration.id,
       },
     }),
 
@@ -31,6 +36,7 @@ async function getStatistics() {
     prisma.node.count({
       where: {
         status: NodeStatus.WITHERED,
+        iterationId: activeIteration.id,
       },
     }),
 
@@ -38,6 +44,7 @@ async function getStatistics() {
     prisma.node.findMany({
       where: {
         status: NodeStatus.WITHERED,
+        iterationId: activeIteration.id,
       },
       distinct: ['authorName'],
       select: {
@@ -50,13 +57,14 @@ async function getStatistics() {
       WITH RECURSIVE node_tree AS (
         SELECT id, "parentId", 1 as depth
         FROM "Node"
-        WHERE "parentId" IS NULL
+        WHERE "parentId" IS NULL AND "iterationId" = ${activeIteration.id}
 
         UNION ALL
 
         SELECT n.id, n."parentId", nt.depth + 1
         FROM "Node" n
         INNER JOIN node_tree nt ON n."parentId" = nt.id
+        WHERE n."iterationId" = ${activeIteration.id}
       )
       SELECT depth
       FROM node_tree
@@ -70,6 +78,7 @@ async function getStatistics() {
         status: {
           in: [NodeStatus.LIVE, NodeStatus.WITHERED],
         },
+        iterationId: activeIteration.id,
       },
       include: {
         _count: {
@@ -93,6 +102,7 @@ async function getStatistics() {
       status: {
         in: [NodeStatus.LIVE, NodeStatus.WITHERED],
       },
+      iterationId: activeIteration.id,
     },
   })
 

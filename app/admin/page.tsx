@@ -20,6 +20,12 @@ export default async function AdminPage() {
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-4xl font-serif text-foreground">Admin Panel</h1>
           <div className="flex gap-4 items-center">
+            <Link
+              href="/admin/iterations"
+              className="text-sm text-purple-muted hover:text-purple-dark underline"
+            >
+              Manage Iterations
+            </Link>
             <LogoutButton />
             <Link
               href="/"

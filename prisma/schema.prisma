@@ -9,6 +9,19 @@ datasource db {
   provider = "postgresql"
 }
 
+model Iteration {
+  id          String   @id @default(cuid())
+  name        String   // e.g., "Iteration 1", "Spring 2025"
+  description String?  // Optional description
+  startDate   DateTime @default(now())
+  endDate     DateTime? // When iteration was concluded
+  isActive    Boolean  @default(true)
+
+  nodes       Node[]
+
+  @@index([isActive])
+}
+
 model Node {
   id        String   @id @default(cuid())
   content   String   // The literary content (no length limit)
@@ -28,9 +41,14 @@ model Node {
   lastResponseAt DateTime? // Last time a child was added
   witheredAt     DateTime? // When node died (3 days no responses)
 
+  // Iteration tracking
+  iterationId String
+  iteration   Iteration @relation(fields: [iterationId], references: [id])
+
   @@index([status])
   @@index([parentId])
   @@index([publishedAt])
+  @@index([iterationId])
 }
 
 enum NodeStatus {

@@ -57,7 +57,19 @@ export default async function Home() {
           )}
         </section>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center space-x-4">
+          <Link
+            href="/search"
+            className="text-sm text-purple-muted hover:text-purple-dark underline"
+          >
+            Search Nodes
+          </Link>
+          <Link
+            href="/stats"
+            className="text-sm text-purple-muted hover:text-purple-dark underline"
+          >
+            Statistics
+          </Link>
           <Link
             href="/admin"
             className="text-sm text-purple-muted hover:text-purple-dark underline"

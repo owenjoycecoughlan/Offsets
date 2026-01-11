@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { NodeStatus } from '@prisma/client'
+import { sendNewSubmissionEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,6 +53,9 @@ export async function POST(request: NextRequest) {
         status: NodeStatus.PENDING,
       },
     })
+
+    // Send email notification (don't wait for it)
+    sendNewSubmissionEmail(node.id, node.authorName, node.content).catch(console.error)
 
     return NextResponse.json({ node }, { status: 201 })
   } catch (error) {

@@ -1,8 +1,17 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { getPendingNodes } from '@/lib/nodes'
+import { isAdminAuthenticated } from '@/lib/auth'
 import ApprovalButtons from '@/components/ApprovalButtons'
+import LogoutButton from '@/components/LogoutButton'
 
 export default async function AdminPage() {
+  const isAuthenticated = await isAdminAuthenticated()
+
+  if (!isAuthenticated) {
+    redirect('/admin/login')
+  }
+
   const pendingNodes = await getPendingNodes()
 
   return (
@@ -10,12 +19,15 @@ export default async function AdminPage() {
       <main className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-4xl font-serif text-foreground">Admin Panel</h1>
-          <Link
-            href="/"
-            className="text-purple-dark hover:text-foreground"
-          >
-            ← Back to home
-          </Link>
+          <div className="flex gap-4 items-center">
+            <LogoutButton />
+            <Link
+              href="/"
+              className="text-purple-dark hover:text-foreground"
+            >
+              ← Back to home
+            </Link>
+          </div>
         </div>
 
         <section>

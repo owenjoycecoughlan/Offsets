@@ -54,9 +54,12 @@ const authors = [
   'Taylor Kim',
 ]
 
+let nodeCounter = 0
+
 async function createBranch(
   iterationId: string,
   parentId: string,
+  parentPublishedAt: Date,
   depth: number,
   maxDepth: number,
   branchFactor: number
@@ -66,17 +69,27 @@ async function createBranch(
   const numChildren = Math.floor(Math.random() * branchFactor) + 1
 
   for (let i = 0; i < numChildren; i++) {
+    nodeCounter++
     const content = sampleContent[Math.floor(Math.random() * sampleContent.length)]
     const author = authors[Math.floor(Math.random() * authors.length)]
-    const isWithered = Math.random() > 0.6
+
+    // Publish date is 1-2 days after parent
+    const daysAfterParent = 1 + Math.random()
+    const publishedAt = new Date(parentPublishedAt.getTime() + daysAfterParent * 24 * 60 * 60 * 1000)
+
+    // Calculate if it should be withered
+    const daysSincePublish = (Date.now() - publishedAt.getTime()) / (24 * 60 * 60 * 1000)
+    const hasChildren = depth < maxDepth && Math.random() > depth / maxDepth
+    const isWithered = !hasChildren && daysSincePublish > 3
 
     const node = await prisma.node.create({
       data: {
         authorName: author,
         content,
         status: isWithered ? NodeStatus.WITHERED : NodeStatus.LIVE,
-        publishedAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-        witheredAt: isWithered ? new Date() : null,
+        publishedAt,
+        lastResponseAt: hasChildren ? publishedAt : null,
+        witheredAt: isWithered ? new Date(publishedAt.getTime() + 3 * 24 * 60 * 60 * 1000) : null,
         parent: {
           connect: { id: parentId }
         },
@@ -87,9 +100,8 @@ async function createBranch(
     })
 
     // Recursively create children with decreasing probability
-    const shouldContinue = Math.random() > depth / maxDepth
-    if (shouldContinue) {
-      await createBranch(iterationId, node.id, depth + 1, maxDepth, branchFactor)
+    if (hasChildren) {
+      await createBranch(iterationId, node.id, publishedAt, depth + 1, maxDepth, branchFactor)
     }
   }
 }
@@ -120,7 +132,19 @@ async function main() {
     console.log('Created iteration:', iteration.id)
   }
 
-  // Create a root node
+  // Check if nodes already exist for this iteration
+  const existingNodes = await prisma.node.count({
+    where: { iterationId: iteration.id }
+  })
+
+  if (existingNodes > 0) {
+    console.log(`Iteration already has ${existingNodes} nodes, skipping seed.`)
+    return
+  }
+
+  // Create a root node with a date 10 days ago to allow for branches
+  const rootPublishedAt = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000)
+
   const rootNode = await prisma.node.create({
     data: {
       authorName: 'The Initiator',
@@ -130,7 +154,8 @@ In this garden of words, we plant seeds that grow in unexpected directions. Each
 
 Begin anywhere. Link to anything. Let the connections surprise us.`,
       status: NodeStatus.LIVE,
-      publishedAt: new Date(),
+      publishedAt: rootPublishedAt,
+      lastResponseAt: rootPublishedAt,
       iteration: {
         connect: {
           id: iteration.id
@@ -145,12 +170,12 @@ Begin anywhere. Link to anything. Let the connections surprise us.`,
   console.log('Creating branching tree structure...')
 
   // Create 3-4 initial branches from root with varying depths
-  await createBranch(iteration.id, rootNode.id, 1, 8, 3) // Deep branch
-  await createBranch(iteration.id, rootNode.id, 1, 5, 2) // Medium branch
-  await createBranch(iteration.id, rootNode.id, 1, 3, 3) // Shallow but wide branch
-  await createBranch(iteration.id, rootNode.id, 1, 6, 2) // Another medium-deep branch
+  await createBranch(iteration.id, rootNode.id, rootPublishedAt, 1, 8, 3) // Deep branch
+  await createBranch(iteration.id, rootNode.id, rootPublishedAt, 1, 5, 2) // Medium branch
+  await createBranch(iteration.id, rootNode.id, rootPublishedAt, 1, 3, 3) // Shallow but wide branch
+  await createBranch(iteration.id, rootNode.id, rootPublishedAt, 1, 6, 2) // Another medium-deep branch
 
-  console.log('Seeding complete!')
+  console.log(`Seeding complete! Created ${nodeCounter + 1} total nodes.`)
 }
 
 main()

@@ -1,0 +1,41 @@
+// Offsets - Collaborative Literary Project
+// Database schema for nodes and their tree structure
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Node {
+  id        String   @id @default(cuid())
+  content   String   // The literary content (no length limit)
+  authorName String  // Player's name (hidden until withered)
+
+  // Node lifecycle
+  status    NodeStatus @default(PENDING)
+  createdAt DateTime   @default(now())
+  publishedAt DateTime? // When admin approved and published
+
+  // Tree structure
+  parentId  String?
+  parent    Node?   @relation("NodeToNode", fields: [parentId], references: [id])
+  children  Node[]  @relation("NodeToNode")
+
+  // Withering tracking
+  lastResponseAt DateTime? // Last time a child was added
+  witheredAt     DateTime? // When node died (3 days no responses)
+
+  @@index([status])
+  @@index([parentId])
+  @@index([publishedAt])
+}
+
+enum NodeStatus {
+  PENDING    // Awaiting admin approval
+  LIVE       // Published and can receive responses
+  WITHERED   // Died (no responses for 3 days), author revealed
+  REJECTED   // Admin rejected (optional, for future use)
+}

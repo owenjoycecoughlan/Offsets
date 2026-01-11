@@ -46,7 +46,7 @@ export default function AncestryView({ nodeId }: AncestryViewProps) {
     <div>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-sm text-blue-600 hover:text-blue-800"
+        className="text-sm text-purple-dark hover:text-foreground"
       >
         {isOpen ? 'Hide' : 'View'} full ancestry
       </button>
@@ -54,38 +54,38 @@ export default function AncestryView({ nodeId }: AncestryViewProps) {
       {isOpen && (
         <div className="mt-4 space-y-3">
           {isLoading ? (
-            <p className="text-sm text-gray-500">Loading ancestry...</p>
+            <p className="text-sm text-purple-muted">Loading ancestry...</p>
           ) : ancestry.length > 0 ? (
             <>
-              <p className="text-sm font-medium text-gray-700">
+              <p className="text-sm font-medium text-foreground">
                 Path from root ({ancestry.length} node{ancestry.length !== 1 ? 's' : ''}):
               </p>
               <div className="space-y-2">
                 {ancestry.map((node, index) => (
-                  <div key={node.id} className="pl-4 border-l-2 border-gray-300">
+                  <div key={node.id} className="pl-4 border-l-2 border-gray-light">
                     <Link
                       href={`/node/${node.id}`}
-                      className="text-sm text-blue-600 hover:text-blue-800"
+                      className="text-sm text-purple-dark hover:text-foreground"
                     >
                       #{node.id.slice(0, 8)}
                     </Link>
-                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                    <p className="text-sm text-purple-dark mt-1 line-clamp-2">
                       {node.content.slice(0, 100)}...
                     </p>
                     {node.status === NodeStatus.WITHERED && (
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-purple-muted mt-1">
                         by {node.authorName}
                       </p>
                     )}
                     {index < ancestry.length - 1 && (
-                      <div className="text-gray-400 text-xs mt-1">↓</div>
+                      <div className="text-gray-light text-xs mt-1">↓</div>
                     )}
                   </div>
                 ))}
               </div>
             </>
           ) : (
-            <p className="text-sm text-gray-500">No ancestry found</p>
+            <p className="text-sm text-purple-muted">No ancestry found</p>
           )}
         </div>
       )}

@@ -58,7 +58,7 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="authorName" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="authorName" className="block text-sm font-medium text-foreground mb-1">
           Your name (will be revealed when your node withers)
         </label>
         <input
@@ -66,14 +66,14 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
           id="authorName"
           value={authorName}
           onChange={(e) => setAuthorName(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent"
           placeholder="Jane Doe"
           disabled={isSubmitting}
         />
       </div>
 
       <div>
-        <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="content" className="block text-sm font-medium text-foreground mb-1">
           Your response
         </label>
         <textarea
@@ -81,17 +81,17 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={8}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-serif resize-y"
+          className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent font-serif resize-y"
           placeholder="Write your creative response here..."
           disabled={isSubmitting}
         />
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-purple-muted mt-1">
           No length limit. Let your creativity flow.
         </p>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+        <div className="bg-purple-muted/20 border border-purple-dark text-purple-dark px-4 py-3 rounded">
           {error}
         </div>
       )}
@@ -99,12 +99,12 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-purple-dark text-white py-3 px-6 rounded-lg font-medium hover:bg-foreground disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
       >
         {isSubmitting ? 'Submitting...' : 'Submit Response'}
       </button>
 
-      <p className="text-sm text-gray-500 text-center">
+      <p className="text-sm text-purple-muted text-center">
         Your response will be reviewed and published once approved by the admin.
       </p>
     </form>

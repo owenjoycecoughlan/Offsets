@@ -60,14 +60,14 @@ export default function ApprovalButtons({ nodeId }: ApprovalButtonsProps) {
       <button
         onClick={handleApprove}
         disabled={isProcessing}
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        className="px-4 py-2 bg-purple-dark text-white rounded hover:bg-foreground disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
       >
         Approve
       </button>
       <button
         onClick={handleReject}
         disabled={isProcessing}
-        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        className="px-4 py-2 bg-purple-muted text-white rounded hover:bg-purple-dark disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
       >
         Reject
       </button>

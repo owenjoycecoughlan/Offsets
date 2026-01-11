@@ -1,0 +1,57 @@
+import Link from 'next/link'
+import { getActiveIteration } from '@/lib/iterations'
+
+export default async function CurrentTreeViewPage() {
+  const activeIteration = await getActiveIteration()
+
+  return (
+    <div className="min-h-screen bg-background">
+      <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <Link href="/" className="text-purple-dark hover:text-foreground">
+            ← Back to home
+          </Link>
+        </div>
+
+        <header className="mb-8">
+          <h1 className="text-4xl font-serif text-foreground mb-2">
+            {activeIteration.name}
+            <span className="ml-3 text-base px-3 py-1 bg-purple-dark text-white rounded">
+              Active
+            </span>
+          </h1>
+          {activeIteration.description && (
+            <p className="text-purple-muted mb-4">{activeIteration.description}</p>
+          )}
+          <div className="flex gap-4 items-center">
+            <Link
+              href="/current"
+              className="text-sm px-4 py-2 border border-gray-light text-foreground rounded-lg hover:bg-background"
+            >
+              List View
+            </Link>
+            <Link
+              href="/current/tree"
+              className="text-sm px-4 py-2 bg-purple-dark text-white rounded-lg"
+            >
+              Tree View
+            </Link>
+          </div>
+        </header>
+
+        <div className="bg-white p-12 rounded-lg shadow border border-gray-light text-center">
+          <h2 className="text-2xl font-serif text-foreground mb-4">Tree View Coming Soon</h2>
+          <p className="text-purple-muted mb-6">
+            Interactive tree visualization will be implemented here
+          </p>
+          <Link
+            href="/current"
+            className="inline-block px-6 py-3 bg-purple-dark text-white rounded-lg hover:bg-foreground transition-colors"
+          >
+            View List for Now
+          </Link>
+        </div>
+      </main>
+    </div>
+  )
+}

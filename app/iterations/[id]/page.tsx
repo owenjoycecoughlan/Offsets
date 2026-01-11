@@ -79,17 +79,33 @@ export default async function IterationArchivePage({ params }: { params: Promise
           {iteration.description && (
             <p className="text-purple-muted mb-4">{iteration.description}</p>
           )}
-          <div className="flex gap-6 text-sm text-purple-muted">
-            <div>
-              <span className="font-medium">Started:</span>{' '}
-              {new Date(iteration.startDate).toLocaleDateString()}
-            </div>
-            {iteration.endDate && (
+          <div className="flex justify-between items-end">
+            <div className="flex gap-6 text-sm text-purple-muted">
               <div>
-                <span className="font-medium">Ended:</span>{' '}
-                {new Date(iteration.endDate).toLocaleDateString()}
+                <span className="font-medium">Started:</span>{' '}
+                {new Date(iteration.startDate).toLocaleDateString()}
               </div>
-            )}
+              {iteration.endDate && (
+                <div>
+                  <span className="font-medium">Ended:</span>{' '}
+                  {new Date(iteration.endDate).toLocaleDateString()}
+                </div>
+              )}
+            </div>
+            <div className="flex gap-4">
+              <Link
+                href={`/iterations/${id}`}
+                className="text-sm px-4 py-2 bg-purple-dark text-white rounded-lg"
+              >
+                List View
+              </Link>
+              <Link
+                href={`/iterations/${id}/tree`}
+                className="text-sm px-4 py-2 border border-gray-light text-foreground rounded-lg hover:bg-background"
+              >
+                Tree View
+              </Link>
+            </div>
           </div>
         </header>
 

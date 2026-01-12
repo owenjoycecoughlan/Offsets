@@ -69,7 +69,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
     // Layout algorithm: hierarchical tree layout
     const nodePositions = new Map<string, { x: number; y: number }>()
-    const levelHeight = 250 // Increased from 200 for more vertical space
+    const levelHeight = 280 // Increased for more vertical space
     const nodeSpacing = 250
 
     const layoutTree = (nodeId: string, level: number, offset: number): number => {
@@ -125,11 +125,13 @@ export default function TreeView({ iterationId }: TreeViewProps) {
           childrenCount: node.childrenCount,
           width: size.width,
           height: size.height,
+          nodeId: node.id,
         },
         style: {
           width: size.width,
           height: size.height,
         },
+        draggable: false,
       }
     })
 
@@ -219,6 +221,9 @@ export default function TreeView({ iterationId }: TreeViewProps) {
         fitView
         minZoom={0.1}
         maxZoom={2}
+        nodesDraggable={false}
+        nodesConnectable={false}
+        elementsSelectable={false}
         defaultEdgeOptions={{
           type: 'straight',
         }}

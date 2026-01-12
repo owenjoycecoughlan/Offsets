@@ -12,20 +12,23 @@ interface CustomNodeData {
   childrenCount: number
   width: number
   height: number
+  nodeId: string
 }
 
 function CustomNode({ data }: NodeProps<CustomNodeData>) {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  // Calculate if content exceeds 2 lines (roughly ~80 chars per line)
-  const maxCharsForTwoLines = 160
-  const needsExpand = data.content.length > maxCharsForTwoLines
-
   const isLive = data.status === 'LIVE'
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIsExpanded(!isExpanded)
+  }
 
   return (
     <div
-      className="border-2 border-foreground bg-white"
+      className="border-2 border-foreground bg-white cursor-pointer"
+      onClick={handleClick}
       style={{
         width: '100%',
         height: '100%',
@@ -52,7 +55,7 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           </span>
         </div>
 
-        {/* Content preview - always show exactly 2 lines */}
+        {/* Content preview - click to expand */}
         <div className="flex-1 overflow-hidden">
           <p
             className={`text-sm text-foreground leading-relaxed ${
@@ -75,17 +78,15 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           </p>
         )}
 
-        {/* Expand/collapse button - always show if content needs it */}
-        {needsExpand && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              setIsExpanded(!isExpanded)
-            }}
-            className="text-xs text-foreground hover:text-gray-mid mt-2 text-left underline"
+        {/* Contribute button - only show when expanded and live */}
+        {isExpanded && isLive && (
+          <Link
+            href={`/node/${data.nodeId}`}
+            onClick={(e) => e.stopPropagation()}
+            className="mt-3 px-4 py-2 bg-foreground text-white border-2 border-foreground font-bold text-xs hover:bg-gray-mid transition-colors text-center"
           >
-            {isExpanded ? 'Show less' : 'Expand'}
-          </button>
+            CONTRIBUTE
+          </Link>
         )}
 
         {/* Published date */}

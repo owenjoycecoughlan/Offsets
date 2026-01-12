@@ -99,9 +99,9 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-purple-dark text-white py-3 px-6 rounded-lg font-medium hover:bg-foreground disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-foreground text-white py-3 px-6 border-2 border-foreground font-bold hover:bg-gray-mid disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
       >
-        {isSubmitting ? 'Submitting...' : 'Submit Response'}
+        {isSubmitting ? 'SUBMITTING...' : 'SUBMIT CONTRIBUTION'}
       </button>
 
       <p className="text-sm text-purple-muted text-center">

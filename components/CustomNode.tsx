@@ -43,54 +43,54 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           flexDirection: 'column',
         }}
       >
-        {/* Invisible handles for connections - positioned on all sides */}
+        {/* Invisible handles for connections - positioned exactly at node edges */}
         <Handle
           type="target"
           position={Position.Top}
           id="top"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', top: 0, transform: 'translate(-50%, 0)' }}
         />
         <Handle
           type="target"
           position={Position.Right}
           id="right"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', right: 0, transform: 'translate(0, -50%)' }}
         />
         <Handle
           type="target"
           position={Position.Bottom}
           id="bottom"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', bottom: 0, transform: 'translate(-50%, 0)' }}
         />
         <Handle
           type="target"
           position={Position.Left}
           id="left"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', left: 0, transform: 'translate(0, -50%)' }}
         />
         <Handle
           type="source"
           position={Position.Top}
           id="top"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', top: 0, transform: 'translate(-50%, 0)' }}
         />
         <Handle
           type="source"
           position={Position.Right}
           id="right"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', right: 0, transform: 'translate(0, -50%)' }}
         />
         <Handle
           type="source"
           position={Position.Bottom}
           id="bottom"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', bottom: 0, transform: 'translate(-50%, 0)' }}
         />
         <Handle
           type="source"
           position={Position.Left}
           id="left"
-          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent' }}
+          style={{ opacity: 0, width: 1, height: 1, border: 'none', background: 'transparent', left: 0, transform: 'translate(0, -50%)' }}
         />
 
         <div className="flex-1 overflow-hidden flex flex-col">

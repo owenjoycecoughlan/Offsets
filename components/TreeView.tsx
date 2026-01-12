@@ -65,82 +65,76 @@ export default function TreeView({ iterationId }: TreeViewProps) {
     // Find root nodes (nodes with no parent or parent not in this iteration)
     const rootNodes = treeNodes.filter(node => !node.parentId || !allNodeIds.has(node.parentId))
 
-    // Radial layout algorithm - nodes arranged in circles around root
+    // Radial layout with angle sector allocation
     const nodePositions = new Map<string, { x: number; y: number }>()
-    const nodeDepth = new Map<string, number>()
-
-    // Calculate depth of each node (distance from root)
-    const calculateDepth = (nodeId: string, depth: number) => {
-      nodeDepth.set(nodeId, depth)
-      const children = childrenMap.get(nodeId) || []
-      children.forEach(childId => calculateDepth(childId, depth + 1))
-    }
-
-    // Set root depth and calculate all depths
-    rootNodes.forEach(root => calculateDepth(root.id, 0))
-
-    // Group nodes by depth
-    const nodesByDepth = new Map<number, string[]>()
-    treeNodes.forEach(node => {
-      const depth = nodeDepth.get(node.id) || 0
-      if (!nodesByDepth.has(depth)) {
-        nodesByDepth.set(depth, [])
-      }
-      nodesByDepth.get(depth)!.push(node.id)
-    })
-
-    // Position nodes in concentric circles
-    const radiusPerLevel = 500
     const centerX = 0
     const centerY = 0
+    const radiusPerLevel = 500
 
-    nodesByDepth.forEach((nodesAtDepth, depth) => {
+    // Count total descendants for each node (for angle allocation)
+    const descendantCount = new Map<string, number>()
+    const countDescendants = (nodeId: string): number => {
+      const children = childrenMap.get(nodeId) || []
+      if (children.length === 0) return 1
+      const count = children.reduce((sum, childId) => sum + countDescendants(childId), 0)
+      descendantCount.set(nodeId, count)
+      return count
+    }
+
+    rootNodes.forEach(root => countDescendants(root.id))
+
+    // Allocate angle sectors recursively
+    const layoutSubtree = (nodeId: string, depth: number, startAngle: number, endAngle: number) => {
       const radius = depth * radiusPerLevel
-      const nodeCount = nodesAtDepth.length
+      const angle = (startAngle + endAngle) / 2
 
-      nodesAtDepth.forEach((nodeId, index) => {
-        if (depth === 0) {
-          // Root nodes at center
-          const angle = (index / nodeCount) * 2 * Math.PI
-          const rootRadius = nodeCount > 1 ? 200 : 0
-          nodePositions.set(nodeId, {
-            x: centerX + Math.cos(angle) * rootRadius,
-            y: centerY + Math.sin(angle) * rootRadius
-          })
-        } else {
-          // Arrange around parent's angle
-          const node = treeNodes.find(n => n.id === nodeId)!
-          const parentPos = node.parentId ? nodePositions.get(node.parentId) : null
-
-          if (parentPos) {
-            // Calculate angle based on parent position and siblings
-            const siblings = childrenMap.get(node.parentId!) || []
-            const siblingIndex = siblings.indexOf(nodeId)
-            const siblingCount = siblings.length
-
-            // Parent's angle from center
-            const parentAngle = Math.atan2(parentPos.y - centerY, parentPos.x - centerX)
-
-            // Spread children around parent's direction
-            const spreadAngle = Math.PI / 3 // 60 degree spread
-            const angleOffset = (siblingIndex - (siblingCount - 1) / 2) * (spreadAngle / Math.max(siblingCount - 1, 1))
-            const angle = parentAngle + angleOffset
-
-            nodePositions.set(nodeId, {
-              x: centerX + Math.cos(angle) * radius,
-              y: centerY + Math.sin(angle) * radius
-            })
-          } else {
-            // Fallback: evenly space around circle
-            const angle = (index / nodeCount) * 2 * Math.PI
-            nodePositions.set(nodeId, {
-              x: centerX + Math.cos(angle) * radius,
-              y: centerY + Math.sin(angle) * radius
-            })
-          }
-        }
+      nodePositions.set(nodeId, {
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius
       })
-    })
+
+      const children = childrenMap.get(nodeId) || []
+      if (children.length === 0) return
+
+      // Allocate angle range to children based on their descendant counts
+      const totalDescendants = descendantCount.get(nodeId) || 1
+      let currentAngle = startAngle
+
+      children.forEach(childId => {
+        const childDescendants = descendantCount.get(childId) || 1
+        const angleShare = (endAngle - startAngle) * (childDescendants / totalDescendants)
+        const childEndAngle = currentAngle + angleShare
+
+        layoutSubtree(childId, depth + 1, currentAngle, childEndAngle)
+        currentAngle = childEndAngle
+      })
+    }
+
+    // Layout each root tree with equal angle sectors
+    if (rootNodes.length === 1) {
+      // Single root at center with children spreading 360 degrees
+      nodePositions.set(rootNodes[0].id, { x: centerX, y: centerY })
+      const children = childrenMap.get(rootNodes[0].id) || []
+      const totalDescendants = descendantCount.get(rootNodes[0].id) || children.length
+      let currentAngle = 0
+
+      children.forEach(childId => {
+        const childDescendants = descendantCount.get(childId) || 1
+        const angleShare = (2 * Math.PI) * (childDescendants / totalDescendants)
+        const childEndAngle = currentAngle + angleShare
+
+        layoutSubtree(childId, 1, currentAngle, childEndAngle)
+        currentAngle = childEndAngle
+      })
+    } else {
+      // Multiple roots: divide circle equally
+      const anglePerRoot = (2 * Math.PI) / rootNodes.length
+      rootNodes.forEach((root, index) => {
+        const startAngle = index * anglePerRoot
+        const endAngle = (index + 1) * anglePerRoot
+        layoutSubtree(root.id, 0, startAngle, endAngle)
+      })
+    }
 
     // Convert to React Flow nodes
     const flowNodes: Node[] = treeNodes.map(node => {

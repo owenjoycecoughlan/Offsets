@@ -1,7 +1,7 @@
 'use client'
 
 import { memo, useState } from 'react'
-import { Handle, Position, NodeProps } from 'reactflow'
+import { NodeProps } from 'reactflow'
 import NodeModal from './NodeModal'
 
 interface CustomNodeData {
@@ -43,16 +43,6 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           flexDirection: 'column',
         }}
       >
-        <Handle
-          type="target"
-          position={Position.Top}
-          style={{
-            background: '#222222',
-            width: 8,
-            height: 8,
-          }}
-        />
-
         <div className="flex-1 overflow-hidden flex flex-col">
           {/* Status badge and author - in one line for withered nodes */}
           <div className="flex justify-between items-start mb-2">
@@ -90,16 +80,6 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
             {new Date(data.publishedAt).toLocaleDateString()}
           </div>
         </div>
-
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          style={{
-            background: '#222222',
-            width: 8,
-            height: 8,
-          }}
-        />
       </div>
 
       <NodeModal

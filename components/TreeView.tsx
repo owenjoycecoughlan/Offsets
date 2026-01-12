@@ -163,7 +163,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
       }
     })
 
-    // Create edges - simple lines connecting parent to child
+    // Create edges - lines that connect to closest points on node borders
     const flowEdges: Edge[] = treeNodes
       .filter(node => node.parentId && allNodeIds.has(node.parentId))
       .map(node => {
@@ -171,7 +171,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
           id: `${node.parentId}-${node.id}`,
           source: node.parentId!,
           target: node.id,
-          type: 'straight',
+          type: 'default', // Uses bezier curves and connects to closest border points
           animated: false,
           style: {
             stroke: '#222222',

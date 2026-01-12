@@ -44,14 +44,14 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
         }}
       >
         {/* Invisible handles for connections - positioned on all sides */}
-        <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
-        <Handle type="target" position={Position.Right} style={{ opacity: 0 }} />
-        <Handle type="target" position={Position.Bottom} style={{ opacity: 0 }} />
-        <Handle type="target" position={Position.Left} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Top} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Right} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
-        <Handle type="source" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Top} id="top" style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Right} id="right" style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Bottom} id="bottom" style={{ opacity: 0 }} />
+        <Handle type="target" position={Position.Left} id="left" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Top} id="top" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Right} id="right" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Bottom} id="bottom" style={{ opacity: 0 }} />
+        <Handle type="source" position={Position.Left} id="left" style={{ opacity: 0 }} />
 
         <div className="flex-1 overflow-hidden flex flex-col">
           {/* Status badge and author - in one line for withered nodes */}

@@ -163,15 +163,51 @@ export default function TreeView({ iterationId }: TreeViewProps) {
       }
     })
 
-    // Create edges - lines that connect to closest points on node borders
+    // Create edges - straight lines that intelligently connect between nodes
     const flowEdges: Edge[] = treeNodes
       .filter(node => node.parentId && allNodeIds.has(node.parentId))
       .map(node => {
+        const parentPos = nodePositions.get(node.parentId!)
+        const childPos = nodePositions.get(node.id)
+
+        if (!parentPos || !childPos) {
+          return {
+            id: `${node.parentId}-${node.id}`,
+            source: node.parentId!,
+            target: node.id,
+            type: 'straight',
+            animated: false,
+            style: { stroke: '#222222', strokeWidth: 2 },
+          }
+        }
+
+        // Calculate which side of each node to connect to
+        const dx = childPos.x - parentPos.x
+        const dy = childPos.y - parentPos.y
+
+        // Determine source handle (where line leaves parent)
+        let sourceHandle: string
+        if (Math.abs(dx) > Math.abs(dy)) {
+          sourceHandle = dx > 0 ? 'right' : 'left'
+        } else {
+          sourceHandle = dy > 0 ? 'bottom' : 'top'
+        }
+
+        // Determine target handle (where line enters child)
+        let targetHandle: string
+        if (Math.abs(dx) > Math.abs(dy)) {
+          targetHandle = dx > 0 ? 'left' : 'right'
+        } else {
+          targetHandle = dy > 0 ? 'top' : 'bottom'
+        }
+
         return {
           id: `${node.parentId}-${node.id}`,
           source: node.parentId!,
           target: node.id,
-          type: 'default', // Uses bezier curves and connects to closest border points
+          sourceHandle,
+          targetHandle,
+          type: 'straight',
           animated: false,
           style: {
             stroke: '#222222',

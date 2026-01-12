@@ -56,7 +56,7 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
         </div>
 
         {/* Content preview - click to expand */}
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden relative">
           <p
             className={`text-sm text-foreground leading-relaxed ${
               !isExpanded ? 'line-clamp-2' : ''
@@ -69,6 +69,11 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           >
             {data.content}
           </p>
+          {!isExpanded && data.content.length > 100 && (
+            <div className="absolute bottom-0 right-0 text-xs text-gray-mid bg-white px-1">
+              (click to expand)
+            </div>
+          )}
         </div>
 
         {/* Author name for withered nodes */}

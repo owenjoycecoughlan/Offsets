@@ -8,6 +8,14 @@ export async function POST(request: Request) {
     // Check against environment variable
     const adminPassword = process.env.ADMIN_PASSWORD
 
+    console.log('Login attempt:', {
+      providedLength: password?.length,
+      expectedLength: adminPassword?.length,
+      provided: password,
+      expected: adminPassword,
+      match: password === adminPassword
+    })
+
     if (!adminPassword) {
       return NextResponse.json(
         { error: 'Admin password not configured' },

@@ -41,12 +41,12 @@ export default function TreeView({ iterationId }: TreeViewProps) {
   const [error, setError] = useState<string | null>(null)
 
   const calculateNodeSize = (childrenCount: number): { width: number; height: number } => {
-    // Base size: 180x100
+    // Base size: 280x140 (increased from 180x100 for more content visibility)
     // Scale up based on children count (up to a max)
     const scaleFactor = Math.min(1 + childrenCount * 0.1, 2)
     return {
-      width: 180 * scaleFactor,
-      height: 100 * scaleFactor,
+      width: 280 * scaleFactor,
+      height: 140 * scaleFactor,
     }
   }
 
@@ -69,8 +69,8 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
     // Layout algorithm: hierarchical tree layout
     const nodePositions = new Map<string, { x: number; y: number }>()
-    const levelHeight = 280 // Increased for more vertical space
-    const nodeSpacing = 250
+    const levelHeight = 320 // Increased for more vertical space with larger nodes
+    const nodeSpacing = 350 // Increased horizontal spacing for larger nodes
 
     const layoutTree = (nodeId: string, level: number, offset: number): number => {
       const children = childrenMap.get(nodeId) || []

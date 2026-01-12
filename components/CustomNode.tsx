@@ -69,7 +69,7 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           {/* Content preview - click to view full */}
           <div className="flex-1 overflow-hidden relative">
             <p
-              className="text-sm text-foreground leading-relaxed line-clamp-2"
+              className="text-sm text-foreground leading-relaxed line-clamp-3"
               style={{
                 wordBreak: 'break-word',
                 whiteSpace: 'pre-wrap',

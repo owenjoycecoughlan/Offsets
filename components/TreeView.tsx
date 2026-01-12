@@ -65,113 +65,82 @@ export default function TreeView({ iterationId }: TreeViewProps) {
     // Find root nodes (nodes with no parent or parent not in this iteration)
     const rootNodes = treeNodes.filter(node => !node.parentId || !allNodeIds.has(node.parentId))
 
-    // Force-directed layout algorithm
+    // Radial layout algorithm - nodes arranged in circles around root
     const nodePositions = new Map<string, { x: number; y: number }>()
+    const nodeDepth = new Map<string, number>()
 
-    // Initialize positions: root at center, others radiating outward
+    // Calculate depth of each node (distance from root)
+    const calculateDepth = (nodeId: string, depth: number) => {
+      nodeDepth.set(nodeId, depth)
+      const children = childrenMap.get(nodeId) || []
+      children.forEach(childId => calculateDepth(childId, depth + 1))
+    }
+
+    // Set root depth and calculate all depths
+    rootNodes.forEach(root => calculateDepth(root.id, 0))
+
+    // Group nodes by depth
+    const nodesByDepth = new Map<number, string[]>()
+    treeNodes.forEach(node => {
+      const depth = nodeDepth.get(node.id) || 0
+      if (!nodesByDepth.has(depth)) {
+        nodesByDepth.set(depth, [])
+      }
+      nodesByDepth.get(depth)!.push(node.id)
+    })
+
+    // Position nodes in concentric circles
+    const radiusPerLevel = 500
     const centerX = 0
     const centerY = 0
 
-    // Place root nodes at center
-    rootNodes.forEach((root, index) => {
-      const angle = (index / rootNodes.length) * 2 * Math.PI
-      const radius = rootNodes.length > 1 ? 300 : 0
-      nodePositions.set(root.id, {
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius
-      })
-    })
+    nodesByDepth.forEach((nodesAtDepth, depth) => {
+      const radius = depth * radiusPerLevel
+      const nodeCount = nodesAtDepth.length
 
-    // Initialize other nodes in a circle around their parent
-    treeNodes.forEach(node => {
-      if (!nodePositions.has(node.id)) {
-        if (node.parentId && nodePositions.has(node.parentId)) {
-          const parentPos = nodePositions.get(node.parentId)!
-          const siblings = childrenMap.get(node.parentId) || []
-          const index = siblings.indexOf(node.id)
-          const angle = (index / siblings.length) * 2 * Math.PI
-          const radius = 600 // Increased from 400
-          nodePositions.set(node.id, {
-            x: parentPos.x + Math.cos(angle) * radius,
-            y: parentPos.y + Math.sin(angle) * radius
+      nodesAtDepth.forEach((nodeId, index) => {
+        if (depth === 0) {
+          // Root nodes at center
+          const angle = (index / nodeCount) * 2 * Math.PI
+          const rootRadius = nodeCount > 1 ? 200 : 0
+          nodePositions.set(nodeId, {
+            x: centerX + Math.cos(angle) * rootRadius,
+            y: centerY + Math.sin(angle) * rootRadius
           })
         } else {
-          nodePositions.set(node.id, {
-            x: centerX + (Math.random() - 0.5) * 2000,
-            y: centerY + (Math.random() - 0.5) * 2000
-          })
-        }
-      }
-    })
+          // Arrange around parent's angle
+          const node = treeNodes.find(n => n.id === nodeId)!
+          const parentPos = node.parentId ? nodePositions.get(node.parentId) : null
 
-    // Force simulation
-    const iterations = 500 // Increased from 300
-    const repulsionStrength = 100000 // Increased from 50000
-    const attractionStrength = 0.005 // Decreased from 0.01
-    const centeringForce = 0.0005 // Decreased from 0.001
+          if (parentPos) {
+            // Calculate angle based on parent position and siblings
+            const siblings = childrenMap.get(node.parentId!) || []
+            const siblingIndex = siblings.indexOf(nodeId)
+            const siblingCount = siblings.length
 
-    for (let i = 0; i < iterations; i++) {
-      const forces = new Map<string, { x: number; y: number }>()
+            // Parent's angle from center
+            const parentAngle = Math.atan2(parentPos.y - centerY, parentPos.x - centerX)
 
-      // Initialize forces
-      treeNodes.forEach(node => {
-        forces.set(node.id, { x: 0, y: 0 })
-      })
+            // Spread children around parent's direction
+            const spreadAngle = Math.PI / 3 // 60 degree spread
+            const angleOffset = (siblingIndex - (siblingCount - 1) / 2) * (spreadAngle / Math.max(siblingCount - 1, 1))
+            const angle = parentAngle + angleOffset
 
-      // Repulsion between all nodes
-      treeNodes.forEach(node1 => {
-        treeNodes.forEach(node2 => {
-          if (node1.id !== node2.id) {
-            const pos1 = nodePositions.get(node1.id)!
-            const pos2 = nodePositions.get(node2.id)!
-            const dx = pos1.x - pos2.x
-            const dy = pos1.y - pos2.y
-            const distance = Math.sqrt(dx * dx + dy * dy) || 1
-            const force = repulsionStrength / (distance * distance)
-            const force1 = forces.get(node1.id)!
-            force1.x += (dx / distance) * force
-            force1.y += (dy / distance) * force
+            nodePositions.set(nodeId, {
+              x: centerX + Math.cos(angle) * radius,
+              y: centerY + Math.sin(angle) * radius
+            })
+          } else {
+            // Fallback: evenly space around circle
+            const angle = (index / nodeCount) * 2 * Math.PI
+            nodePositions.set(nodeId, {
+              x: centerX + Math.cos(angle) * radius,
+              y: centerY + Math.sin(angle) * radius
+            })
           }
-        })
-      })
-
-      // Attraction along edges (parent-child connections)
-      treeNodes.forEach(node => {
-        if (node.parentId && allNodeIds.has(node.parentId)) {
-          const childPos = nodePositions.get(node.id)!
-          const parentPos = nodePositions.get(node.parentId)!
-          const dx = parentPos.x - childPos.x
-          const dy = parentPos.y - childPos.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-          const force = distance * attractionStrength
-
-          const childForce = forces.get(node.id)!
-          childForce.x += dx * force
-          childForce.y += dy * force
-
-          const parentForce = forces.get(node.parentId)!
-          parentForce.x -= dx * force
-          parentForce.y -= dy * force
         }
       })
-
-      // Centering force for root nodes
-      rootNodes.forEach(root => {
-        const pos = nodePositions.get(root.id)!
-        const rootForce = forces.get(root.id)!
-        rootForce.x -= pos.x * centeringForce
-        rootForce.y -= pos.y * centeringForce
-      })
-
-      // Apply forces with damping
-      const damping = 0.8
-      treeNodes.forEach(node => {
-        const pos = nodePositions.get(node.id)!
-        const force = forces.get(node.id)!
-        pos.x += force.x * damping
-        pos.y += force.y * damping
-      })
-    }
+    })
 
     // Convert to React Flow nodes
     const flowNodes: Node[] = treeNodes.map(node => {

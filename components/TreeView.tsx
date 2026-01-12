@@ -223,7 +223,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
         maxZoom={2}
         nodesDraggable={false}
         nodesConnectable={false}
-        elementsSelectable={false}
+        elementsSelectable={true}
         defaultEdgeOptions={{
           type: 'straight',
         }}

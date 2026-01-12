@@ -20,15 +20,21 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
 
   const isLive = data.status === 'LIVE'
 
+  // Check if content needs truncation (more than ~2 lines worth of text)
+  const needsTruncation = data.content.length > 80
+
   const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
     e.stopPropagation()
+    console.log('Node clicked, expanding:', !isExpanded)
     setIsExpanded(!isExpanded)
   }
 
   return (
     <div
-      className="border-2 border-foreground bg-white cursor-pointer"
+      className="border-2 border-foreground bg-white cursor-pointer hover:border-gray-mid transition-colors"
       onClick={handleClick}
+      onMouseDown={(e) => e.stopPropagation()}
       style={{
         width: '100%',
         height: '100%',
@@ -74,9 +80,9 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           >
             {data.content}
           </p>
-          {!isExpanded && data.content.length > 100 && (
-            <div className="absolute bottom-0 right-0 text-xs text-gray-mid bg-white px-1">
-              (click to expand)
+          {!isExpanded && needsTruncation && (
+            <div className="absolute bottom-0 right-0 text-xs text-gray-mid bg-white px-1 font-bold">
+              click to expand
             </div>
           )}
         </div>
@@ -88,12 +94,13 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           </p>
         )}
 
-        {/* Contribute button - only show when expanded and live */}
-        {isExpanded && isLive && (
+        {/* Contribute button - show when expanded */}
+        {isExpanded && (
           <Link
             href={`/node/${data.nodeId}`}
             onClick={(e) => e.stopPropagation()}
-            className="mt-3 px-4 py-2 bg-foreground text-white border-2 border-foreground font-bold text-xs hover:bg-gray-mid transition-colors text-center"
+            onMouseDown={(e) => e.stopPropagation()}
+            className="mt-3 px-4 py-2 bg-foreground text-white border-2 border-foreground font-bold text-xs hover:bg-gray-mid transition-colors text-center block"
           >
             CONTRIBUTE
           </Link>

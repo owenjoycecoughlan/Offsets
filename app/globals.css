@@ -3,19 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #222222;
-  --gray-dark: #4e4e4e;
   --gray-mid: #636363;
-  --gray-light: #777777;
-  --gray-lighter: #aaaaaa;
+  --gray-light: #aaaaaa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-gray-dark: var(--gray-dark);
   --color-gray-mid: var(--gray-mid);
   --color-gray-light: var(--gray-light);
-  --color-gray-lighter: var(--gray-lighter);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

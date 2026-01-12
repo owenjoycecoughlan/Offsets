@@ -13,6 +13,8 @@ export interface SiteSettingsData {
   steps: Step[]
   rulesTitle: string
   rules: string[]
+  contributionHeading: string
+  contributionWitheredMessage: string
 }
 
 export async function getSiteSettings(): Promise<SiteSettingsData> {
@@ -44,7 +46,9 @@ export async function getSiteSettings(): Promise<SiteSettingsData> {
     howItWorksTitle: settings.howItWorksTitle,
     steps,
     rulesTitle: settings.rulesTitle,
-    rules
+    rules,
+    contributionHeading: settings.contributionHeading,
+    contributionWitheredMessage: settings.contributionWitheredMessage
   }
 }
 
@@ -57,6 +61,8 @@ export async function updateSiteSettings(data: Partial<SiteSettingsData>) {
   if (data.rulesTitle !== undefined) updateData.rulesTitle = data.rulesTitle
   if (data.steps !== undefined) updateData.steps = data.steps
   if (data.rules !== undefined) updateData.rules = data.rules
+  if (data.contributionHeading !== undefined) updateData.contributionHeading = data.contributionHeading
+  if (data.contributionWitheredMessage !== undefined) updateData.contributionWitheredMessage = data.contributionWitheredMessage
 
   return await prisma.siteSettings.upsert({
     where: { id: 'default' },

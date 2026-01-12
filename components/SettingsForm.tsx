@@ -16,6 +16,8 @@ interface SettingsFormProps {
     steps: Step[]
     rulesTitle: string
     rules: string[]
+    contributionHeading: string
+    contributionWitheredMessage: string
   }
 }
 
@@ -252,6 +254,39 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
           >
             ADD RULE
           </button>
+        </div>
+      </section>
+
+      {/* Contribution Page Section */}
+      <section className="bg-white p-6 border-2 border-foreground">
+        <h2 className="text-2xl font-bold text-foreground mb-4">Contribution Page</h2>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-bold text-foreground mb-2">
+              Response Heading
+            </label>
+            <input
+              type="text"
+              value={formData.contributionHeading}
+              onChange={(e) => setFormData(prev => ({ ...prev, contributionHeading: e.target.value }))}
+              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              placeholder="Respond to this node"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-foreground mb-2">
+              Withered Node Message
+            </label>
+            <textarea
+              value={formData.contributionWitheredMessage}
+              onChange={(e) => setFormData(prev => ({ ...prev, contributionWitheredMessage: e.target.value }))}
+              rows={2}
+              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              placeholder="This node has withered and can no longer receive responses."
+            />
+          </div>
         </div>
       </section>
 

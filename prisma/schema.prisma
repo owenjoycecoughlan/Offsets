@@ -73,5 +73,9 @@ model SiteSettings {
   rulesTitle        String   @default("The Rules")
   rules             Json     @default("[\"Any length: Your node can be a single word or a lengthy piece - there's no character limit.\",\"Any connection: Link to your parent node however you see fit - thematically, formally, linguistically, or conceptually.\",\"Withering period: If a live node receives no responses for 3 days, it \\\"withers\\\" and the author's name is revealed.\",\"No responses to withered nodes: Once a node has withered, it can no longer receive new responses.\",\"Submit your name: Enter your name with each submission - it will be revealed when your node withers.\"]")
 
+  // Contribution page section
+  contributionHeading        String   @default("Respond to this node")
+  contributionWitheredMessage String  @default("This node has withered and can no longer receive responses.")
+
   updatedAt         DateTime @updatedAt
 }

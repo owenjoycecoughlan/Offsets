@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getNodeWithContext } from '@/lib/nodes'
+import { getSiteSettings } from '@/lib/settings'
 import { NodeStatus } from '@prisma/client'
 import ResponseForm from '@/components/ResponseForm'
 import AncestryView from '@/components/AncestryView'
@@ -8,6 +9,7 @@ import AncestryView from '@/components/AncestryView'
 export default async function NodePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const node = await getNodeWithContext(id)
+  const settings = await getSiteSettings()
 
   if (!node || node.status === NodeStatus.PENDING) {
     notFound()
@@ -106,7 +108,7 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
         {canRespond && (
           <section className="bg-white p-8 rounded-lg shadow border border-gray-light">
             <h3 className="text-xl font-serif text-foreground mb-4">
-              Respond to this node
+              {settings.contributionHeading}
             </h3>
             <ResponseForm parentId={node.id} />
           </section>
@@ -115,7 +117,7 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
         {!canRespond && node.status === NodeStatus.WITHERED && (
           <div className="bg-purple-muted/20 border border-purple-muted p-4 rounded-lg text-center">
             <p className="text-purple-dark">
-              This node has withered and can no longer receive responses.
+              {settings.contributionWitheredMessage}
             </p>
           </div>
         )}

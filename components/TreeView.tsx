@@ -9,8 +9,6 @@ import ReactFlow, {
   MiniMap,
   useNodesState,
   useEdgesState,
-  Position,
-  MarkerType,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import CustomNode from './CustomNode'
@@ -67,46 +65,113 @@ export default function TreeView({ iterationId }: TreeViewProps) {
     // Find root nodes (nodes with no parent or parent not in this iteration)
     const rootNodes = treeNodes.filter(node => !node.parentId || !allNodeIds.has(node.parentId))
 
-    // Layout algorithm: hierarchical tree layout
+    // Force-directed layout algorithm
     const nodePositions = new Map<string, { x: number; y: number }>()
-    const levelHeight = 320 // Increased for more vertical space with larger nodes
-    const nodeSpacing = 350 // Increased horizontal spacing for larger nodes
 
-    const layoutTree = (nodeId: string, level: number, offset: number): number => {
-      const children = childrenMap.get(nodeId) || []
+    // Initialize positions: root at center, others radiating outward
+    const centerX = 0
+    const centerY = 0
 
-      if (children.length === 0) {
-        // Leaf node
-        nodePositions.set(nodeId, { x: offset, y: level * levelHeight })
-        return offset + nodeSpacing
+    // Place root nodes at center
+    rootNodes.forEach((root, index) => {
+      const angle = (index / rootNodes.length) * 2 * Math.PI
+      const radius = rootNodes.length > 1 ? 300 : 0
+      nodePositions.set(root.id, {
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius
+      })
+    })
+
+    // Initialize other nodes in a circle around their parent
+    treeNodes.forEach(node => {
+      if (!nodePositions.has(node.id)) {
+        if (node.parentId && nodePositions.has(node.parentId)) {
+          const parentPos = nodePositions.get(node.parentId)!
+          const siblings = childrenMap.get(node.parentId) || []
+          const index = siblings.indexOf(node.id)
+          const angle = (index / siblings.length) * 2 * Math.PI
+          const radius = 400
+          nodePositions.set(node.id, {
+            x: parentPos.x + Math.cos(angle) * radius,
+            y: parentPos.y + Math.sin(angle) * radius
+          })
+        } else {
+          nodePositions.set(node.id, {
+            x: centerX + (Math.random() - 0.5) * 1000,
+            y: centerY + (Math.random() - 0.5) * 1000
+          })
+        }
       }
+    })
 
-      // Layout children first
-      let childOffset = offset
-      const childPositions: number[] = []
+    // Force simulation
+    const iterations = 300
+    const repulsionStrength = 50000
+    const attractionStrength = 0.01
+    const centeringForce = 0.001
 
-      children.forEach(childId => {
-        const childX = childOffset
-        childPositions.push(childX)
-        childOffset = layoutTree(childId, level + 1, childOffset)
+    for (let i = 0; i < iterations; i++) {
+      const forces = new Map<string, { x: number; y: number }>()
+
+      // Initialize forces
+      treeNodes.forEach(node => {
+        forces.set(node.id, { x: 0, y: 0 })
       })
 
-      // Position parent at the center of its children
-      const firstChildX = childPositions[0]
-      const lastChildX = childPositions[childPositions.length - 1]
-      const parentX = (firstChildX + lastChildX) / 2
+      // Repulsion between all nodes
+      treeNodes.forEach(node1 => {
+        treeNodes.forEach(node2 => {
+          if (node1.id !== node2.id) {
+            const pos1 = nodePositions.get(node1.id)!
+            const pos2 = nodePositions.get(node2.id)!
+            const dx = pos1.x - pos2.x
+            const dy = pos1.y - pos2.y
+            const distance = Math.sqrt(dx * dx + dy * dy) || 1
+            const force = repulsionStrength / (distance * distance)
+            const force1 = forces.get(node1.id)!
+            force1.x += (dx / distance) * force
+            force1.y += (dy / distance) * force
+          }
+        })
+      })
 
-      nodePositions.set(nodeId, { x: parentX, y: level * levelHeight })
+      // Attraction along edges (parent-child connections)
+      treeNodes.forEach(node => {
+        if (node.parentId && allNodeIds.has(node.parentId)) {
+          const childPos = nodePositions.get(node.id)!
+          const parentPos = nodePositions.get(node.parentId)!
+          const dx = parentPos.x - childPos.x
+          const dy = parentPos.y - childPos.y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+          const force = distance * attractionStrength
 
-      return childOffset
+          const childForce = forces.get(node.id)!
+          childForce.x += dx * force
+          childForce.y += dy * force
+
+          const parentForce = forces.get(node.parentId)!
+          parentForce.x -= dx * force
+          parentForce.y -= dy * force
+        }
+      })
+
+      // Centering force for root nodes
+      rootNodes.forEach(root => {
+        const pos = nodePositions.get(root.id)!
+        const rootForce = forces.get(root.id)!
+        rootForce.x -= pos.x * centeringForce
+        rootForce.y -= pos.y * centeringForce
+      })
+
+      // Apply forces with damping
+      const damping = 0.8
+      treeNodes.forEach(node => {
+        const pos = nodePositions.get(node.id)!
+        const force = forces.get(node.id)!
+        pos.x += force.x * damping
+        pos.y += force.y * damping
+      })
     }
-
-    // Layout each root tree
-    let currentOffset = 0
-    rootNodes.forEach(root => {
-      currentOffset = layoutTree(root.id, 0, currentOffset)
-      currentOffset += nodeSpacing // Add extra space between separate trees
-    })
 
     // Convert to React Flow nodes
     const flowNodes: Node[] = treeNodes.map(node => {
@@ -135,7 +200,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
       }
     })
 
-    // Create edges with simple straight lines
+    // Create edges - simple lines connecting parent to child
     const flowEdges: Edge[] = treeNodes
       .filter(node => node.parentId && allNodeIds.has(node.parentId))
       .map(node => {
@@ -148,10 +213,6 @@ export default function TreeView({ iterationId }: TreeViewProps) {
           style: {
             stroke: '#222222',
             strokeWidth: 2,
-          },
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-            color: '#222222',
           },
         }
       })
@@ -232,6 +293,8 @@ export default function TreeView({ iterationId }: TreeViewProps) {
         <Controls />
         <MiniMap
           nodeColor={() => '#222222'}
+          pannable={true}
+          zoomable={true}
         />
       </ReactFlow>
     </div>

@@ -90,25 +90,25 @@ export default function TreeView({ iterationId }: TreeViewProps) {
           const siblings = childrenMap.get(node.parentId) || []
           const index = siblings.indexOf(node.id)
           const angle = (index / siblings.length) * 2 * Math.PI
-          const radius = 400
+          const radius = 600 // Increased from 400
           nodePositions.set(node.id, {
             x: parentPos.x + Math.cos(angle) * radius,
             y: parentPos.y + Math.sin(angle) * radius
           })
         } else {
           nodePositions.set(node.id, {
-            x: centerX + (Math.random() - 0.5) * 1000,
-            y: centerY + (Math.random() - 0.5) * 1000
+            x: centerX + (Math.random() - 0.5) * 2000,
+            y: centerY + (Math.random() - 0.5) * 2000
           })
         }
       }
     })
 
     // Force simulation
-    const iterations = 300
-    const repulsionStrength = 50000
-    const attractionStrength = 0.01
-    const centeringForce = 0.001
+    const iterations = 500 // Increased from 300
+    const repulsionStrength = 100000 // Increased from 50000
+    const attractionStrength = 0.005 // Decreased from 0.01
+    const centeringForce = 0.0005 // Decreased from 0.001
 
     for (let i = 0; i < iterations; i++) {
       const forces = new Map<string, { x: number; y: number }>()

@@ -2,22 +2,20 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #000000;
-  --red: #B51218;
-  --cyan: #01F9F0;
-  --blue: #0798F8;
-  --green: #01DA1E;
-  --magenta: #CC00B8;
+  --foreground: #222222;
+  --gray-dark: #4e4e4e;
+  --gray-mid: #636363;
+  --gray-light: #777777;
+  --gray-lighter: #aaaaaa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-red: var(--red);
-  --color-cyan: var(--cyan);
-  --color-blue: var(--blue);
-  --color-green: var(--green);
-  --color-magenta: var(--magenta);
+  --color-gray-dark: var(--gray-dark);
+  --color-gray-mid: var(--gray-mid);
+  --color-gray-light: var(--gray-light);
+  --color-gray-lighter: var(--gray-lighter);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

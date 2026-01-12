@@ -1,6 +1,21 @@
 import { prisma } from './prisma'
+import { Prisma } from '@prisma/client'
 
-export async function getSiteSettings() {
+export interface Step {
+  title: string
+  description: string
+}
+
+export interface SiteSettingsData {
+  heroTitle: string
+  heroSubtitle: string
+  howItWorksTitle: string
+  steps: Step[]
+  rulesTitle: string
+  rules: string[]
+}
+
+export async function getSiteSettings(): Promise<SiteSettingsData> {
   let settings = await prisma.siteSettings.findUnique({
     where: { id: 'default' }
   })
@@ -12,31 +27,40 @@ export async function getSiteSettings() {
     })
   }
 
-  return settings
+  // Parse JSON fields
+  const steps = (settings.steps as Prisma.JsonArray).map(step => {
+    const s = step as Prisma.JsonObject
+    return {
+      title: s.title as string,
+      description: s.description as string
+    }
+  })
+
+  const rules = (settings.rules as Prisma.JsonArray).map(rule => rule as string)
+
+  return {
+    heroTitle: settings.heroTitle,
+    heroSubtitle: settings.heroSubtitle,
+    howItWorksTitle: settings.howItWorksTitle,
+    steps,
+    rulesTitle: settings.rulesTitle,
+    rules
+  }
 }
 
-export async function updateSiteSettings(data: Partial<{
-  heroTitle: string
-  heroSubtitle: string
-  howItWorksTitle: string
-  step1Title: string
-  step1Description: string
-  step2Title: string
-  step2Description: string
-  step3Title: string
-  step3Description: string
-  step4Title: string
-  step4Description: string
-  rulesTitle: string
-  rule1: string
-  rule2: string
-  rule3: string
-  rule4: string
-  rule5: string
-}>) {
+export async function updateSiteSettings(data: Partial<SiteSettingsData>) {
+  const updateData: any = {}
+
+  if (data.heroTitle !== undefined) updateData.heroTitle = data.heroTitle
+  if (data.heroSubtitle !== undefined) updateData.heroSubtitle = data.heroSubtitle
+  if (data.howItWorksTitle !== undefined) updateData.howItWorksTitle = data.howItWorksTitle
+  if (data.rulesTitle !== undefined) updateData.rulesTitle = data.rulesTitle
+  if (data.steps !== undefined) updateData.steps = data.steps
+  if (data.rules !== undefined) updateData.rules = data.rules
+
   return await prisma.siteSettings.upsert({
     where: { id: 'default' },
-    update: data,
-    create: { id: 'default', ...data }
+    update: updateData,
+    create: { id: 'default', ...updateData }
   })
 }

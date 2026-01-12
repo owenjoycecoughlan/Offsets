@@ -3,25 +3,19 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+interface Step {
+  title: string
+  description: string
+}
+
 interface SettingsFormProps {
   settings: {
     heroTitle: string
     heroSubtitle: string
     howItWorksTitle: string
-    step1Title: string
-    step1Description: string
-    step2Title: string
-    step2Description: string
-    step3Title: string
-    step3Description: string
-    step4Title: string
-    step4Description: string
+    steps: Step[]
     rulesTitle: string
-    rule1: string
-    rule2: string
-    rule3: string
-    rule4: string
-    rule5: string
+    rules: string[]
   }
 }
 
@@ -56,129 +50,208 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
     }
   }
 
-  const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  const updateStep = (index: number, field: 'title' | 'description', value: string) => {
+    const newSteps = [...formData.steps]
+    newSteps[index] = { ...newSteps[index], [field]: value }
+    setFormData(prev => ({ ...prev, steps: newSteps }))
+  }
+
+  const addStep = () => {
+    setFormData(prev => ({
+      ...prev,
+      steps: [...prev.steps, { title: '', description: '' }]
+    }))
+  }
+
+  const removeStep = (index: number) => {
+    if (formData.steps.length <= 1) {
+      alert('You must have at least one step')
+      return
+    }
+    setFormData(prev => ({
+      ...prev,
+      steps: prev.steps.filter((_, i) => i !== index)
+    }))
+  }
+
+  const updateRule = (index: number, value: string) => {
+    const newRules = [...formData.rules]
+    newRules[index] = value
+    setFormData(prev => ({ ...prev, rules: newRules }))
+  }
+
+  const addRule = () => {
+    setFormData(prev => ({
+      ...prev,
+      rules: [...prev.rules, '']
+    }))
+  }
+
+  const removeRule = (index: number) => {
+    if (formData.rules.length <= 1) {
+      alert('You must have at least one rule')
+      return
+    }
+    setFormData(prev => ({
+      ...prev,
+      rules: prev.rules.filter((_, i) => i !== index)
+    }))
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {message && (
-        <div className={`p-4 rounded-lg ${
+        <div className={`p-4 border-2 ${
           message.type === 'success'
-            ? 'bg-green-50 text-green-800 border border-green-200'
-            : 'bg-red-50 text-red-800 border border-red-200'
+            ? 'bg-white text-foreground border-foreground'
+            : 'bg-white text-foreground border-foreground'
         }`}>
           {message.text}
         </div>
       )}
 
       {/* Hero Section */}
-      <section className="bg-white p-6 rounded-lg shadow border border-gray-light">
-        <h2 className="text-2xl font-serif text-foreground mb-4">Hero Section</h2>
+      <section className="bg-white p-6 border-2 border-foreground">
+        <h2 className="text-2xl font-bold text-foreground mb-4">Hero Section</h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-bold text-foreground mb-2">
               Title
             </label>
             <input
               type="text"
               value={formData.heroTitle}
-              onChange={(e) => handleChange('heroTitle', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
+              onChange={(e) => setFormData(prev => ({ ...prev, heroTitle: e.target.value }))}
+              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-bold text-foreground mb-2">
               Subtitle
             </label>
             <textarea
               value={formData.heroSubtitle}
-              onChange={(e) => handleChange('heroSubtitle', e.target.value)}
+              onChange={(e) => setFormData(prev => ({ ...prev, heroSubtitle: e.target.value }))}
               rows={2}
-              className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
+              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
             />
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="bg-white p-6 rounded-lg shadow border border-gray-light">
-        <h2 className="text-2xl font-serif text-foreground mb-4">How It Works Section</h2>
+      <section className="bg-white p-6 border-2 border-foreground">
+        <h2 className="text-2xl font-bold text-foreground mb-4">How It Works Section</h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-bold text-foreground mb-2">
               Section Title
             </label>
             <input
               type="text"
               value={formData.howItWorksTitle}
-              onChange={(e) => handleChange('howItWorksTitle', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
+              onChange={(e) => setFormData(prev => ({ ...prev, howItWorksTitle: e.target.value }))}
+              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
             />
           </div>
 
-          {[1, 2, 3, 4].map((num) => (
-            <div key={num} className="border-t border-gray-light pt-4">
-              <div className="mb-3">
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Step {num} Title
-                </label>
-                <input
-                  type="text"
-                  value={formData[`step${num}Title` as keyof typeof formData]}
-                  onChange={(e) => handleChange(`step${num}Title`, e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
-                />
+          {formData.steps.map((step, index) => (
+            <div key={index} className="border-2 border-gray-light p-4">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-lg font-bold text-foreground">Step {index + 1}</h3>
+                <button
+                  type="button"
+                  onClick={() => removeStep(index)}
+                  className="px-3 py-1 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light transition-colors"
+                >
+                  REMOVE
+                </button>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Step {num} Description
-                </label>
-                <textarea
-                  value={formData[`step${num}Description` as keyof typeof formData]}
-                  onChange={(e) => handleChange(`step${num}Description`, e.target.value)}
-                  rows={3}
-                  className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
-                />
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-sm font-bold text-foreground mb-2">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    value={step.title}
+                    onChange={(e) => updateStep(index, 'title', e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-foreground mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    value={step.description}
+                    onChange={(e) => updateStep(index, 'description', e.target.value)}
+                    rows={3}
+                    className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+                  />
+                </div>
               </div>
             </div>
           ))}
+
+          <button
+            type="button"
+            onClick={addStep}
+            className="w-full px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid transition-colors"
+          >
+            ADD STEP
+          </button>
         </div>
       </section>
 
       {/* Rules Section */}
-      <section className="bg-white p-6 rounded-lg shadow border border-gray-light">
-        <h2 className="text-2xl font-serif text-foreground mb-4">Rules Section</h2>
+      <section className="bg-white p-6 border-2 border-foreground">
+        <h2 className="text-2xl font-bold text-foreground mb-4">Rules Section</h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-bold text-foreground mb-2">
               Section Title
             </label>
             <input
               type="text"
               value={formData.rulesTitle}
-              onChange={(e) => handleChange('rulesTitle', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
+              onChange={(e) => setFormData(prev => ({ ...prev, rulesTitle: e.target.value }))}
+              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
             />
           </div>
 
-          {[1, 2, 3, 4, 5].map((num) => (
-            <div key={num}>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Rule {num}
-              </label>
+          {formData.rules.map((rule, index) => (
+            <div key={index} className="border-2 border-gray-light p-4">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-lg font-bold text-foreground">Rule {index + 1}</h3>
+                <button
+                  type="button"
+                  onClick={() => removeRule(index)}
+                  className="px-3 py-1 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light transition-colors"
+                >
+                  REMOVE
+                </button>
+              </div>
               <textarea
-                value={formData[`rule${num}` as keyof typeof formData]}
-                onChange={(e) => handleChange(`rule${num}`, e.target.value)}
+                value={rule}
+                onChange={(e) => updateRule(index, e.target.value)}
                 rows={2}
-                className="w-full px-4 py-2 border border-gray-light rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-dark"
+                className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
               />
             </div>
           ))}
+
+          <button
+            type="button"
+            onClick={addRule}
+            className="w-full px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid transition-colors"
+          >
+            ADD RULE
+          </button>
         </div>
       </section>
 
@@ -186,16 +259,16 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
         <button
           type="button"
           onClick={() => router.push('/admin')}
-          className="px-6 py-3 border border-gray-light text-foreground rounded-lg hover:bg-background transition-colors"
+          className="px-6 py-3 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light transition-colors"
         >
-          Cancel
+          CANCEL
         </button>
         <button
           type="submit"
           disabled={saving}
-          className="px-6 py-3 bg-purple-dark text-white rounded-lg hover:bg-foreground transition-colors disabled:opacity-50"
+          className="px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
         >
-          {saving ? 'Saving...' : 'Save Settings'}
+          {saving ? 'SAVING...' : 'SAVE SETTINGS'}
         </button>
       </div>
     </form>

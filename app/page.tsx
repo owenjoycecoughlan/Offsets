@@ -59,33 +59,16 @@ export default async function Home() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="border-2 border-foreground p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step1Title}</h3>
-              <p className="text-foreground leading-relaxed">
-                {settings.step1Description}
-              </p>
-            </div>
-
-            <div className="border-2 border-foreground p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step2Title}</h3>
-              <p className="text-foreground leading-relaxed">
-                {settings.step2Description}
-              </p>
-            </div>
-
-            <div className="border-2 border-foreground p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step3Title}</h3>
-              <p className="text-foreground leading-relaxed">
-                {settings.step3Description}
-              </p>
-            </div>
-
-            <div className="border-2 border-foreground p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step4Title}</h3>
-              <p className="text-foreground leading-relaxed">
-                {settings.step4Description}
-              </p>
-            </div>
+            {settings.steps.map((step, index) => (
+              <div key={index} className="border-2 border-foreground p-6">
+                <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">
+                  {step.title}
+                </h3>
+                <p className="text-foreground leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -94,11 +77,11 @@ export default async function Home() {
           <h2 className="text-3xl font-bold text-foreground mb-6">{settings.rulesTitle}</h2>
 
           <ul className="space-y-3 text-foreground text-base list-disc list-inside">
-            <li className="font-bold">{settings.rule1}</li>
-            <li>{settings.rule2}</li>
-            <li>{settings.rule3}</li>
-            <li>{settings.rule4}</li>
-            <li>{settings.rule5}</li>
+            {settings.rules.map((rule, index) => (
+              <li key={index} className={index === 0 ? 'font-bold' : ''}>
+                {rule}
+              </li>
+            ))}
           </ul>
         </section>
 

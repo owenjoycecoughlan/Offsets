@@ -17,15 +17,15 @@ export default async function AdminSettingsPage() {
     <div className="min-h-screen bg-background">
       <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/admin" className="text-purple-dark hover:text-foreground">
+          <Link href="/admin" className="text-foreground hover:text-gray-mid underline">
             ← Back to admin
           </Link>
         </div>
 
         <header className="mb-8">
-          <h1 className="text-4xl font-serif text-foreground mb-2">Site Settings</h1>
-          <p className="text-purple-muted">
-            Edit the text that appears on the landing page
+          <h1 className="text-4xl font-bold text-foreground mb-2">Site Settings</h1>
+          <p className="text-gray-mid">
+            Edit the text that appears on the landing page. Add or remove steps and rules as needed.
           </p>
         </header>
 

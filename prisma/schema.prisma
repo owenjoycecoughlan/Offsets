@@ -65,24 +65,13 @@ model SiteSettings {
   heroTitle         String   @default("Offsets")
   heroSubtitle      String   @default("A collaborative literary project where nodes of creative writing branch and grow like a tree")
 
-  // How It Works section
+  // How It Works section - now dynamic JSON arrays
   howItWorksTitle   String   @default("How It Works")
-  step1Title        String   @default("1. Read & Respond")
-  step1Description  String   @default("Browse live nodes and respond with your own creative writing. Your response can be any length and connect to the parent node through linguistic, conceptual, formal, or stylistic links.")
-  step2Title        String   @default("2. Stay Anonymous")
-  step2Description  String   @default("Your name stays hidden until your node \"withers\" - when it receives no responses for 3 days. This keeps the focus on the writing itself.")
-  step3Title        String   @default("3. Branch & Grow")
-  step3Description  String   @default("Each response creates a new branch in the tree. Multiple people can respond to the same node, creating a network of interconnected creative writing.")
-  step4Title        String   @default("4. Admin Approval")
-  step4Description  String   @default("All submissions are reviewed before publishing to maintain quality and intention. Once approved, your node goes live immediately.")
+  steps             Json     @default("[{\"title\":\"1. Read & Respond\",\"description\":\"Browse live nodes and respond with your own creative writing. Your response can be any length and connect to the parent node through linguistic, conceptual, formal, or stylistic links.\"},{\"title\":\"2. Stay Anonymous\",\"description\":\"Your name stays hidden until your node \\\"withers\\\" - when it receives no responses for 3 days. This keeps the focus on the writing itself.\"},{\"title\":\"3. Branch & Grow\",\"description\":\"Each response creates a new branch in the tree. Multiple people can respond to the same node, creating a network of interconnected creative writing.\"},{\"title\":\"4. Admin Approval\",\"description\":\"All submissions are reviewed before publishing to maintain quality and intention. Once approved, your node goes live immediately.\"}]")
 
-  // Rules section
+  // Rules section - now dynamic JSON array
   rulesTitle        String   @default("The Rules")
-  rule1             String   @default("Any length: Your node can be a single word or a lengthy piece - there's no character limit.")
-  rule2             String   @default("Any connection: Link to your parent node however you see fit - thematically, formally, linguistically, or conceptually.")
-  rule3             String   @default("Withering period: If a live node receives no responses for 3 days, it \"withers\" and the author's name is revealed.")
-  rule4             String   @default("No responses to withered nodes: Once a node has withered, it can no longer receive new responses.")
-  rule5             String   @default("Submit your name: Enter your name with each submission - it will be revealed when your node withers.")
+  rules             Json     @default("[\"Any length: Your node can be a single word or a lengthy piece - there's no character limit.\",\"Any connection: Link to your parent node however you see fit - thematically, formally, linguistically, or conceptually.\",\"Withering period: If a live node receives no responses for 3 days, it \\\"withers\\\" and the author's name is revealed.\",\"No responses to withered nodes: Once a node has withered, it can no longer receive new responses.\",\"Submit your name: Enter your name with each submission - it will be revealed when your node withers.\"]")
 
   updatedAt         DateTime @updatedAt
 }

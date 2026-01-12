@@ -16,21 +16,16 @@ interface CustomNodeData {
 
 function CustomNode({ data }: NodeProps<CustomNodeData>) {
   const [isExpanded, setIsExpanded] = useState(false)
-  const maxPreviewLength = 100
 
-  const contentPreview = data.content.length > maxPreviewLength
-    ? data.content.slice(0, maxPreviewLength) + '...'
-    : data.content
+  // Calculate if content exceeds 2 lines (roughly ~80 chars per line)
+  const maxCharsForTwoLines = 160
+  const needsExpand = data.content.length > maxCharsForTwoLines
 
   const isLive = data.status === 'LIVE'
 
   return (
     <div
-      className={`rounded-lg border-2 ${
-        isLive
-          ? 'border-purple-dark bg-white'
-          : 'border-gray-light bg-gray-50'
-      } shadow-md hover:shadow-lg transition-shadow`}
+      className="border-2 border-foreground bg-white"
       style={{
         width: '100%',
         height: '100%',
@@ -43,68 +38,58 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
         type="target"
         position={Position.Top}
         style={{
-          background: isLive ? '#7c6174' : '#c3c6c3',
+          background: '#222222',
           width: 8,
           height: 8,
         }}
       />
 
       <div className="flex-1 overflow-hidden flex flex-col">
-        {/* Status badge */}
+        {/* Status badge - smaller */}
         <div className="flex justify-between items-start mb-2">
-          <span
-            className={`text-xs px-2 py-0.5 rounded ${
-              isLive
-                ? 'bg-purple-dark/20 text-purple-dark'
-                : 'bg-gray-light text-purple-muted'
-            }`}
-          >
+          <span className="text-xs text-gray-mid">
             {data.status}
           </span>
-          {data.childrenCount > 0 && (
-            <span className="text-xs text-purple-muted">
-              {data.childrenCount} {data.childrenCount === 1 ? 'child' : 'children'}
-            </span>
-          )}
         </div>
 
-        {/* Content preview */}
+        {/* Content preview - always show exactly 2 lines */}
         <div className="flex-1 overflow-hidden">
           <p
             className={`text-sm text-foreground leading-relaxed ${
-              !isExpanded ? 'line-clamp-3' : ''
+              !isExpanded ? 'line-clamp-2' : ''
             }`}
             style={{
               wordBreak: 'break-word',
               whiteSpace: 'pre-wrap',
+              lineHeight: '1.5',
             }}
           >
-            {isExpanded ? data.content : contentPreview}
+            {data.content}
           </p>
         </div>
 
         {/* Author name for withered nodes */}
         {!isLive && data.authorName && (
-          <p className="text-xs text-purple-muted mt-2 italic">
+          <p className="text-xs text-gray-mid mt-2 italic">
             by {data.authorName}
           </p>
         )}
 
-        {/* Expand/collapse button */}
-        {data.content.length > maxPreviewLength && (
+        {/* Expand/collapse button - always show if content needs it */}
+        {needsExpand && (
           <button
             onClick={(e) => {
               e.stopPropagation()
               setIsExpanded(!isExpanded)
             }}
-            className="text-xs text-purple-dark hover:text-foreground mt-2 text-left underline"
+            className="text-xs text-foreground hover:text-gray-mid mt-2 text-left underline"
           >
             {isExpanded ? 'Show less' : 'Expand'}
           </button>
         )}
 
         {/* Published date */}
-        <div className="text-xs text-purple-muted mt-1">
+        <div className="text-xs text-gray-mid mt-1">
           {new Date(data.publishedAt).toLocaleDateString()}
         </div>
       </div>
@@ -113,7 +98,7 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
         type="source"
         position={Position.Bottom}
         style={{
-          background: isLive ? '#7c6174' : '#c3c6c3',
+          background: '#222222',
           width: 8,
           height: 8,
         }}

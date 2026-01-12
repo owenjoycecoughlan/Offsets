@@ -69,7 +69,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
     // Layout algorithm: hierarchical tree layout
     const nodePositions = new Map<string, { x: number; y: number }>()
-    const levelHeight = 200
+    const levelHeight = 250 // Increased from 200 for more vertical space
     const nodeSpacing = 250
 
     const layoutTree = (nodeId: string, level: number, offset: number): number => {
@@ -133,26 +133,23 @@ export default function TreeView({ iterationId }: TreeViewProps) {
       }
     })
 
-    // Create edges with bezier curves
+    // Create edges with simple straight lines
     const flowEdges: Edge[] = treeNodes
       .filter(node => node.parentId && allNodeIds.has(node.parentId))
       .map(node => {
-        const childrenCount = childrenMap.get(node.parentId!)?.length || 1
-        const strokeWidth = Math.max(1, Math.min(5, childrenCount * 0.5))
-
         return {
           id: `${node.parentId}-${node.id}`,
           source: node.parentId!,
           target: node.id,
-          type: 'smoothstep',
-          animated: node.status === 'LIVE',
+          type: 'straight',
+          animated: false,
           style: {
-            stroke: node.status === 'LIVE' ? '#7c6174' : '#c3c6c3',
-            strokeWidth,
+            stroke: '#222222',
+            strokeWidth: 2,
           },
           markerEnd: {
             type: MarkerType.ArrowClosed,
-            color: node.status === 'LIVE' ? '#7c6174' : '#c3c6c3',
+            color: '#222222',
           },
         }
       })
@@ -189,30 +186,30 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
   if (loading) {
     return (
-      <div className="w-full h-[600px] bg-white rounded-lg shadow border border-gray-light flex items-center justify-center">
-        <div className="text-purple-muted">Loading tree visualization...</div>
+      <div className="w-full h-[600px] bg-white border-2 border-foreground flex items-center justify-center">
+        <div className="text-gray-mid">Loading tree visualization...</div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="w-full h-[600px] bg-white rounded-lg shadow border border-gray-light flex items-center justify-center">
-        <div className="text-red-500">{error}</div>
+      <div className="w-full h-[600px] bg-white border-2 border-foreground flex items-center justify-center">
+        <div className="text-foreground">{error}</div>
       </div>
     )
   }
 
   if (nodes.length === 0) {
     return (
-      <div className="w-full h-[600px] bg-white rounded-lg shadow border border-gray-light flex items-center justify-center">
-        <div className="text-purple-muted">No nodes to display</div>
+      <div className="w-full h-[600px] bg-white border-2 border-foreground flex items-center justify-center">
+        <div className="text-gray-mid">No nodes to display</div>
       </div>
     )
   }
 
   return (
-    <div className="w-full h-[600px] bg-white rounded-lg shadow border border-gray-light">
+    <div className="w-full h-[600px] bg-white border-2 border-foreground">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -223,15 +220,13 @@ export default function TreeView({ iterationId }: TreeViewProps) {
         minZoom={0.1}
         maxZoom={2}
         defaultEdgeOptions={{
-          type: 'smoothstep',
+          type: 'straight',
         }}
       >
-        <Background color="#c3c6c3" gap={16} />
+        <Background color="#aaaaaa" gap={16} />
         <Controls />
         <MiniMap
-          nodeColor={(node) => {
-            return node.data.status === 'LIVE' ? '#7c6174' : '#c3c6c3'
-          }}
+          nodeColor={() => '#222222'}
         />
       </ReactFlow>
     </div>

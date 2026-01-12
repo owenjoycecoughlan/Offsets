@@ -16,14 +16,14 @@ export default async function Home() {
           <h1 className="text-6xl font-bold text-foreground mb-6">
             {settings.heroTitle}
           </h1>
-          <p className="text-xl text-foreground leading-relaxed border-l-2 border-gray-mid pl-6 p-4">
+          <p className="text-xl text-foreground leading-relaxed border-l-2 border-foreground pl-6 p-4">
             {settings.heroSubtitle}
           </p>
         </header>
 
         {/* Current Iteration CTA */}
         <section className="mb-12">
-          <div className="border-2 border-gray-mid p-6">
+          <div className="border-2 border-foreground p-6">
             <div className="mb-4">
               <h2 className="text-3xl font-bold text-foreground mb-2">
                 {activeIteration.name}
@@ -44,7 +44,7 @@ export default async function Home() {
               </Link>
               <Link
                 href="/current/tree"
-                className="px-6 py-3 border-2 border-gray-mid text-foreground hover:bg-gray-mid hover:text-white transition-colors font-bold"
+                className="px-6 py-3 border-2 border-foreground text-foreground hover:bg-gray-mid hover:text-white transition-colors font-bold"
               >
                 VIEW TREE
               </Link>
@@ -54,34 +54,34 @@ export default async function Home() {
 
         {/* How It Works */}
         <section className="mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-8 border-b-2 border-gray-mid pb-2">
+          <h2 className="text-4xl font-bold text-foreground mb-8 border-b-2 border-foreground pb-2">
             {settings.howItWorksTitle}
           </h2>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="border-2 border-gray-light p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-gray-mid pb-2">{settings.step1Title}</h3>
+            <div className="border-2 border-foreground p-6">
+              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step1Title}</h3>
               <p className="text-foreground leading-relaxed">
                 {settings.step1Description}
               </p>
             </div>
 
-            <div className="border-2 border-gray-mid p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-gray-mid pb-2">{settings.step2Title}</h3>
+            <div className="border-2 border-foreground p-6">
+              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step2Title}</h3>
               <p className="text-foreground leading-relaxed">
                 {settings.step2Description}
               </p>
             </div>
 
-            <div className="border-2 border-gray-mid p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-gray-mid pb-2">{settings.step3Title}</h3>
+            <div className="border-2 border-foreground p-6">
+              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step3Title}</h3>
               <p className="text-foreground leading-relaxed">
                 {settings.step3Description}
               </p>
             </div>
 
-            <div className="border-2 border-gray-light p-6">
-              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-gray-mid pb-2">{settings.step4Title}</h3>
+            <div className="border-2 border-foreground p-6">
+              <h3 className="text-xl font-bold text-foreground mb-3 border-b-2 border-foreground pb-2">{settings.step4Title}</h3>
               <p className="text-foreground leading-relaxed">
                 {settings.step4Description}
               </p>
@@ -90,7 +90,7 @@ export default async function Home() {
         </section>
 
         {/* Rules */}
-        <section className="mb-12 border-2 border-gray-mid p-8">
+        <section className="mb-12 border-2 border-foreground p-8">
           <h2 className="text-3xl font-bold text-foreground mb-6">{settings.rulesTitle}</h2>
 
           <ul className="space-y-3 text-foreground text-base list-disc list-inside">
@@ -105,7 +105,7 @@ export default async function Home() {
         {/* Past Iterations */}
         {pastIterations.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-8 border-b-2 border-gray-mid pb-2">
+            <h2 className="text-3xl font-bold text-foreground mb-8 border-b-2 border-foreground pb-2">
               Past Iterations
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
@@ -142,7 +142,7 @@ export default async function Home() {
         )}
 
         {/* Footer Links */}
-        <footer className="mt-16 pt-8 border-t-2 border-gray-mid text-center space-x-6">
+        <footer className="mt-16 pt-8 border-t-2 border-foreground text-center space-x-6">
             <Link
               href="/search"
               className="text-base font-bold text-foreground hover:text-gray-mid underline"

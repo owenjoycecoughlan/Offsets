@@ -56,20 +56,20 @@ export default function ApprovalButtons({ nodeId }: ApprovalButtonsProps) {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-4">
       <button
         onClick={handleApprove}
         disabled={isProcessing}
-        className="px-4 py-2 bg-purple-dark text-white rounded hover:bg-foreground disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
+        className="px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
       >
-        Approve
+        APPROVE
       </button>
       <button
         onClick={handleReject}
         disabled={isProcessing}
-        className="px-4 py-2 bg-purple-muted text-white rounded hover:bg-purple-dark disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
+        className="px-6 py-3 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
       >
-        Reject
+        REJECT
       </button>
     </div>
   )

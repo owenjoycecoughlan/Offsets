@@ -54,18 +54,15 @@ export default async function AdminPage() {
               {pendingNodes.map((node) => (
                 <div
                   key={node.id}
-                  className="bg-white p-6 border-2 border-gray-light"
+                  className="bg-white p-6 border-2 border-foreground"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-foreground">
-                        Submission #{node.id.slice(0, 8)}
-                      </h3>
-                      <p className="text-sm text-gray-mid">
-                        Submitted {new Date(node.createdAt).toLocaleString()}
-                      </p>
-                    </div>
-                    <ApprovalButtons nodeId={node.id} />
+                  <div className="mb-4">
+                    <h3 className="text-lg font-bold text-foreground">
+                      Submission #{node.id.slice(0, 8)}
+                    </h3>
+                    <p className="text-sm text-gray-mid">
+                      Submitted {new Date(node.createdAt).toLocaleString()}
+                    </p>
                   </div>
 
                   {node.parent && (
@@ -97,10 +94,14 @@ export default async function AdminPage() {
                   </div>
 
                   {!node.parent && (
-                    <div className="bg-gray-light/20 border-2 border-gray-mid p-3 text-sm text-foreground">
+                    <div className="mb-4 bg-gray-light/20 border-2 border-gray-mid p-3 text-sm text-foreground">
                       This is a root node (no parent)
                     </div>
                   )}
+
+                  <div className="pt-4 border-t-2 border-gray-light">
+                    <ApprovalButtons nodeId={node.id} />
+                  </div>
                 </div>
               ))}
             </div>

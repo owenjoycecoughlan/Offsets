@@ -48,11 +48,16 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
       />
 
       <div className="flex-1 overflow-hidden flex flex-col">
-        {/* Status badge - smaller */}
+        {/* Status badge and author - in one line for withered nodes */}
         <div className="flex justify-between items-start mb-2">
           <span className="text-xs text-gray-mid">
             {data.status}
           </span>
+          {!isLive && data.authorName && !isExpanded && (
+            <span className="text-xs text-gray-mid italic">
+              by {data.authorName}
+            </span>
+          )}
         </div>
 
         {/* Content preview - click to expand */}
@@ -76,8 +81,8 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
           )}
         </div>
 
-        {/* Author name for withered nodes */}
-        {!isLive && data.authorName && (
+        {/* Author name for withered nodes when expanded */}
+        {!isLive && data.authorName && isExpanded && (
           <p className="text-xs text-gray-mid mt-2 italic">
             by {data.authorName}
           </p>

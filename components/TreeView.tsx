@@ -293,9 +293,12 @@ export default function TreeView({ iterationId }: TreeViewProps) {
         <MiniMap
           nodeColor={(node) => {
             const nodeData = node.data as { status: 'LIVE' | 'WITHERED' }
-            return nodeData.status === 'LIVE' ? '#b8e994' : '#f4e4a6'
+            return nodeData.status === 'LIVE' ? '#b8e994' : '#e89b9b'
           }}
-          maskColor="rgba(43, 43, 43, 0.8)"
+          maskColor="rgba(102, 102, 102, 0.5)"
+          style={{
+            backgroundColor: '#2b2b2b',
+          }}
           pannable={true}
           zoomable={true}
         />

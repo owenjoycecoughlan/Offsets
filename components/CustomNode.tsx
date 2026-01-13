@@ -29,7 +29,7 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
     setIsModalOpen(true)
   }
 
-  const borderColor = isLive ? 'border-green-border' : 'border-yellow-border'
+  const borderColor = isLive ? 'border-green-border' : 'border-red-border'
 
   return (
     <>

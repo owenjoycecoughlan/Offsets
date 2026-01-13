@@ -78,7 +78,7 @@ export default async function Home() {
 
           <ul className="space-y-3 text-foreground text-base list-disc list-inside">
             {settings.rules.map((rule, index) => (
-              <li key={index} className={index === 0 ? 'font-bold' : ''}>
+              <li key={index}>
                 {rule}
               </li>
             ))}

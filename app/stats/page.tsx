@@ -128,62 +128,62 @@ export default async function StatsPage() {
     <div className="min-h-screen bg-background">
       <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/" className="text-purple-dark hover:text-foreground">
+          <Link href="/" className="text-teal hover:text-foreground">
             ← Back to home
           </Link>
         </div>
 
         <header className="mb-12">
           <h1 className="text-4xl font-serif text-foreground mb-2">Project Statistics</h1>
-          <p className="text-purple-muted">
+          <p className="text-gray-mid">
             Overview of the Offsets collaborative writing project
           </p>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-            <h3 className="text-sm font-medium text-purple-muted mb-1">Total Nodes</h3>
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
+            <h3 className="text-sm font-medium text-gray-mid mb-1">Total Nodes</h3>
             <p className="text-4xl font-bold text-foreground">{stats.totalNodes}</p>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-            <h3 className="text-sm font-medium text-purple-muted mb-1">Live Nodes</h3>
-            <p className="text-4xl font-bold text-purple-dark">{stats.liveNodes}</p>
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
+            <h3 className="text-sm font-medium text-gray-mid mb-1">Live Nodes</h3>
+            <p className="text-4xl font-bold text-teal">{stats.liveNodes}</p>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-            <h3 className="text-sm font-medium text-purple-muted mb-1">Withered Nodes</h3>
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
+            <h3 className="text-sm font-medium text-gray-mid mb-1">Withered Nodes</h3>
             <p className="text-4xl font-bold text-foreground">{stats.witheredNodes}</p>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-            <h3 className="text-sm font-medium text-purple-muted mb-1">Root Nodes</h3>
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
+            <h3 className="text-sm font-medium text-gray-mid mb-1">Root Nodes</h3>
             <p className="text-4xl font-bold text-foreground">{stats.rootNodes}</p>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-            <h3 className="text-sm font-medium text-purple-muted mb-1">Unique Authors</h3>
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
+            <h3 className="text-sm font-medium text-gray-mid mb-1">Unique Authors</h3>
             <p className="text-4xl font-bold text-foreground">{stats.totalAuthors}</p>
-            <p className="text-xs text-purple-muted mt-1">From withered nodes</p>
+            <p className="text-xs text-gray-mid mt-1">From withered nodes</p>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
-            <h3 className="text-sm font-medium text-purple-muted mb-1">Deepest Branch</h3>
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
+            <h3 className="text-sm font-medium text-gray-mid mb-1">Deepest Branch</h3>
             <p className="text-4xl font-bold text-foreground">{stats.deepestBranch}</p>
-            <p className="text-xs text-purple-muted mt-1">Levels deep</p>
+            <p className="text-xs text-gray-mid mt-1">Levels deep</p>
           </div>
         </div>
 
         {stats.mostActiveNode && (
-          <div className="bg-white p-6 rounded-lg shadow border border-gray-light">
+          <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
             <h3 className="text-lg font-medium text-foreground mb-4">Most Active Node</h3>
             <Link
               href={`/node/${stats.mostActiveNode.id}`}
-              className="text-purple-dark hover:text-foreground"
+              className="text-teal hover:text-foreground"
             >
               Node #{stats.mostActiveNode.id.slice(0, 8)}
             </Link>
-            <p className="text-purple-muted text-sm mt-2">
+            <p className="text-gray-mid text-sm mt-2">
               {stats.mostActiveNode.childrenCount} {stats.mostActiveNode.childrenCount === 1 ? 'response' : 'responses'}
             </p>
             <p className="text-foreground mt-3 text-sm">

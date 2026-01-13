@@ -148,7 +148,7 @@ export default async function StatsPage() {
 
           <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
             <h3 className="text-sm font-medium text-gray-mid mb-1">Live Nodes</h3>
-            <p className="text-4xl font-bold text-teal">{stats.liveNodes}</p>
+            <p className="text-4xl font-bold text-foreground">{stats.liveNodes}</p>
           </div>
 
           <div className="p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>

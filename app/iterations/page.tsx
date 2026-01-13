@@ -8,14 +8,14 @@ export default async function IterationsListPage() {
     <div className="min-h-screen bg-background">
       <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/" className="text-purple-dark hover:text-foreground">
+          <Link href="/" className="text-teal hover:text-foreground">
             ← Back to home
           </Link>
         </div>
 
         <header className="mb-12">
           <h1 className="text-4xl font-serif text-foreground mb-2">All Iterations</h1>
-          <p className="text-purple-muted">
+          <p className="text-gray-mid">
             Browse all iterations of the Offsets project
           </p>
         </header>
@@ -25,13 +25,14 @@ export default async function IterationsListPage() {
             <Link
               key={iteration.id}
               href={`/iterations/${iteration.id}`}
-              className="block bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow border border-gray-light"
+              className="block p-6 border border-gray-light hover:border-teal transition-colors no-underline"
+              style={{ backgroundColor: '#3a3a3a' }}
             >
               <div className="flex justify-between items-start mb-3">
                 <h3 className="text-xl font-medium text-foreground">
                   {iteration.name}
                   {iteration.isActive && (
-                    <span className="ml-3 text-sm px-3 py-1 bg-purple-dark text-white rounded">
+                    <span className="ml-3 text-sm px-3 py-1 bg-background text-foreground border-2 border-foreground font-bold uppercase">
                       Active
                     </span>
                   )}
@@ -39,10 +40,10 @@ export default async function IterationsListPage() {
               </div>
 
               {iteration.description && (
-                <p className="text-purple-muted text-sm mb-3">{iteration.description}</p>
+                <p className="text-gray-mid text-sm mb-3">{iteration.description}</p>
               )}
 
-              <div className="flex gap-6 text-sm text-purple-muted">
+              <div className="flex gap-6 text-sm text-gray-mid">
                 <div>
                   <span className="font-medium">Started:</span>{' '}
                   {new Date(iteration.startDate).toLocaleDateString()}

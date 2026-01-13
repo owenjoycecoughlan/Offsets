@@ -105,15 +105,15 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
       {message && (
         <div className={`p-4 border-2 ${
           message.type === 'success'
-            ? 'bg-white text-foreground border-foreground'
-            : 'bg-white text-foreground border-foreground'
-        }`}>
+            ? 'text-foreground border-green-border'
+            : 'text-foreground border-red-border'
+        }`} style={{ backgroundColor: '#3a3a3a' }}>
           {message.text}
         </div>
       )}
 
       {/* Hero Section */}
-      <section className="bg-white p-6 border-2 border-foreground">
+      <section className="p-6 border-2 border-foreground" style={{ backgroundColor: '#3a3a3a' }}>
         <h2 className="text-2xl font-bold text-foreground mb-4">Hero Section</h2>
 
         <div className="space-y-4">
@@ -125,7 +125,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
               type="text"
               value={formData.heroTitle}
               onChange={(e) => setFormData(prev => ({ ...prev, heroTitle: e.target.value }))}
-              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
             />
           </div>
 
@@ -137,14 +137,14 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
               value={formData.heroSubtitle}
               onChange={(e) => setFormData(prev => ({ ...prev, heroSubtitle: e.target.value }))}
               rows={2}
-              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
             />
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="bg-white p-6 border-2 border-foreground">
+      <section className="p-6 border-2 border-foreground" style={{ backgroundColor: '#3a3a3a' }}>
         <h2 className="text-2xl font-bold text-foreground mb-4">How It Works Section</h2>
 
         <div className="space-y-4">
@@ -156,7 +156,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
               type="text"
               value={formData.howItWorksTitle}
               onChange={(e) => setFormData(prev => ({ ...prev, howItWorksTitle: e.target.value }))}
-              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
             />
           </div>
 
@@ -181,7 +181,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
                     type="text"
                     value={step.title}
                     onChange={(e) => updateStep(index, 'title', e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+                    className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
                   />
                 </div>
                 <div>
@@ -192,7 +192,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
                     value={step.description}
                     onChange={(e) => updateStep(index, 'description', e.target.value)}
                     rows={3}
-                    className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+                    className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
                   />
                 </div>
               </div>
@@ -210,7 +210,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
       </section>
 
       {/* Rules Section */}
-      <section className="bg-white p-6 border-2 border-foreground">
+      <section className="p-6 border-2 border-foreground" style={{ backgroundColor: '#3a3a3a' }}>
         <h2 className="text-2xl font-bold text-foreground mb-4">Rules Section</h2>
 
         <div className="space-y-4">
@@ -222,7 +222,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
               type="text"
               value={formData.rulesTitle}
               onChange={(e) => setFormData(prev => ({ ...prev, rulesTitle: e.target.value }))}
-              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
             />
           </div>
 
@@ -242,7 +242,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
                 value={rule}
                 onChange={(e) => updateRule(index, e.target.value)}
                 rows={2}
-                className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+                className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
               />
             </div>
           ))}
@@ -258,7 +258,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
       </section>
 
       {/* Contribution Page Section */}
-      <section className="bg-white p-6 border-2 border-foreground">
+      <section className="p-6 border-2 border-foreground" style={{ backgroundColor: '#3a3a3a' }}>
         <h2 className="text-2xl font-bold text-foreground mb-4">Contribution Page</h2>
 
         <div className="space-y-4">
@@ -270,7 +270,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
               type="text"
               value={formData.contributionHeading}
               onChange={(e) => setFormData(prev => ({ ...prev, contributionHeading: e.target.value }))}
-              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
               placeholder="Respond to this node"
             />
           </div>
@@ -283,7 +283,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
               value={formData.contributionWitheredMessage}
               onChange={(e) => setFormData(prev => ({ ...prev, contributionWitheredMessage: e.target.value }))}
               rows={2}
-              className="w-full px-4 py-2 border-2 border-foreground focus:outline-none focus:ring-2 focus:ring-gray-mid"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
               placeholder="This node has withered and can no longer receive responses."
             />
           </div>

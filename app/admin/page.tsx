@@ -54,7 +54,8 @@ export default async function AdminPage() {
               {pendingNodes.map((node) => (
                 <div
                   key={node.id}
-                  className="bg-white p-6 border-2 border-foreground"
+                  className="p-6 border-2 border-foreground"
+                  style={{ backgroundColor: '#3a3a3a' }}
                 >
                   <div className="mb-4">
                     <h3 className="text-lg font-bold text-foreground">
@@ -66,13 +67,13 @@ export default async function AdminPage() {
                   </div>
 
                   {node.parent && (
-                    <div className="mb-4 p-4 bg-background border-2 border-gray-light">
+                    <div className="mb-4 p-4 border-2 border-gray-light" style={{ backgroundColor: '#2b2b2b' }}>
                       <p className="text-xs font-bold text-gray-mid mb-2">
                         RESPONDING TO:
                       </p>
                       <Link
                         href={`/node/${node.parent.id}`}
-                        className="text-sm text-foreground hover:text-gray-mid underline"
+                        className="text-sm text-teal hover:text-foreground underline"
                       >
                         Node #{node.parent.id.slice(0, 8)}
                       </Link>
@@ -94,7 +95,7 @@ export default async function AdminPage() {
                   </div>
 
                   {!node.parent && (
-                    <div className="mb-4 bg-gray-light/20 border-2 border-gray-mid p-3 text-sm text-foreground">
+                    <div className="mb-4 border-2 border-yellow-border p-3 text-sm text-foreground" style={{ backgroundColor: '#2b2b2b' }}>
                       This is a root node (no parent)
                     </div>
                   )}

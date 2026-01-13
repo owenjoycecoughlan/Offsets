@@ -43,10 +43,10 @@ export default function AdminLoginPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-serif text-foreground mb-2">Admin Login</h1>
-          <p className="text-purple-muted">Enter password to access admin panel</p>
+          <p className="text-gray-mid">Enter password to access admin panel</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow border border-gray-light">
+        <form onSubmit={handleSubmit} className="p-8 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
           <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
               Password
@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent"
+              className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
               placeholder="Enter admin password"
               disabled={isSubmitting}
               autoFocus
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
           </div>
 
           {error && (
-            <div className="mb-4 bg-purple-muted/20 border border-purple-dark text-purple-dark px-4 py-3 rounded">
+            <div className="mb-4 border-2 border-red-border text-foreground px-4 py-3" style={{ backgroundColor: '#2b2b2b' }}>
               {error}
             </div>
           )}
@@ -74,12 +74,12 @@ export default function AdminLoginPage() {
             disabled={isSubmitting}
             className="w-full bg-background text-teal py-3 px-6 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
           >
-            {isSubmitting ? 'Logging in...' : 'Login'}
+            {isSubmitting ? 'LOGGING IN...' : 'LOGIN'}
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <Link href="/" className="text-sm text-purple-dark hover:text-foreground">
+          <Link href="/" className="text-sm text-teal hover:text-foreground">
             ← Back to home
           </Link>
         </div>

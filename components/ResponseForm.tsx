@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Button from './Button'
 
 interface ResponseFormProps {
   parentId: string
@@ -96,13 +97,14 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
         </div>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-background text-teal py-3 px-6 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+        variant="primary"
+        fullWidth
       >
         {isSubmitting ? 'SUBMITTING...' : 'SUBMIT CONTRIBUTION'}
-      </button>
+      </Button>
 
       <p className="text-sm text-gray-mid text-center">
         Your response will be reviewed and published once approved by the admin.

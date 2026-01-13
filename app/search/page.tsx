@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { NodeStatus } from '@prisma/client'
+import Button from '@/components/Button'
 
 interface SearchResult {
   id: string
@@ -101,13 +102,14 @@ export default function SearchPage() {
               </select>
             </div>
 
-            <button
+            <Button
               onClick={handleSearch}
               disabled={isSearching || !query.trim()}
-              className="w-full bg-background text-teal py-3 px-6 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+              variant="primary"
+              fullWidth
             >
               {isSearching ? 'SEARCHING...' : 'SEARCH'}
-            </button>
+            </Button>
           </div>
         </div>
 

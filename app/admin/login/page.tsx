@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Button from '@/components/Button'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -69,13 +70,14 @@ export default function AdminLoginPage() {
             </div>
           )}
 
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-background text-teal py-3 px-6 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+            variant="primary"
+            fullWidth
           >
             {isSubmitting ? 'LOGGING IN...' : 'LOGIN'}
-          </button>
+          </Button>
         </form>
 
         <div className="mt-6 text-center">

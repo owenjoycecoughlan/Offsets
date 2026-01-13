@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Button from './Button'
 
 export default function NewIterationButton() {
   const router = useRouter()
@@ -46,12 +47,13 @@ export default function NewIterationButton() {
 
   if (!isOpen) {
     return (
-      <button
+      <Button
         onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+        variant="primary"
+        size="md"
       >
         Start New Iteration
-      </button>
+      </Button>
     )
   }
 
@@ -91,21 +93,22 @@ export default function NewIterationButton() {
           </div>
 
           <div className="flex gap-3">
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-background text-teal py-2 px-4 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+              variant="primary"
+              className="flex-1"
             >
               {isSubmitting ? 'Creating...' : 'Create'}
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               onClick={() => setIsOpen(false)}
               disabled={isSubmitting}
-              className="px-4 py-2 border-2 border-yellow-border text-foreground font-bold hover:bg-gray-light transition-colors"
+              variant="danger"
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </form>
       </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Button from './Button'
 
 interface NodeModalProps {
   isOpen: boolean
@@ -31,7 +32,7 @@ export default function NodeModal({
       onClick={onClose}
     >
       <div
-        className="bg-background border-2 border-yellow-border max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+        className={`bg-background border-2 ${isLive ? 'border-green-border' : 'border-red-border'} max-w-2xl w-full max-h-[80vh] overflow-y-auto`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
@@ -67,16 +68,17 @@ export default function NodeModal({
 
           {/* Action button */}
           {isLive && (
-            <Link
+            <Button
               href={`/node/${nodeId}`}
-              className="block w-full py-3 px-6 bg-background text-teal border-2 border-teal font-bold text-center hover:bg-teal hover:text-background transition-colors"
+              variant="primary"
+              fullWidth
             >
               CONTRIBUTE
-            </Link>
+            </Button>
           )}
 
           {!isLive && (
-            <div className="py-3 px-6 bg-gray-light/20 border-2 border-yellow-border text-center text-gray-mid">
+            <div className="py-3 px-6 bg-gray-light/20 border-2 border-red-border text-center text-gray-mid">
               This node has withered
             </div>
           )}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Button from './Button'
 
 interface ApprovalButtonsProps {
   nodeId: string
@@ -57,20 +58,20 @@ export default function ApprovalButtons({ nodeId }: ApprovalButtonsProps) {
 
   return (
     <div className="flex gap-4">
-      <button
+      <Button
         onClick={handleApprove}
         disabled={isProcessing}
-        className="px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+        variant="primary"
       >
         APPROVE
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={handleReject}
         disabled={isProcessing}
-        className="px-6 py-3 bg-background text-foreground border-2 border-yellow-border font-bold hover:bg-gray-light disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+        variant="danger"
       >
         REJECT
-      </button>
+      </Button>
     </div>
   )
 }

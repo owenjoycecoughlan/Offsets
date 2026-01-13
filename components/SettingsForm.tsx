@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Button from './Button'
 
 interface Step {
   title: string
@@ -164,13 +165,14 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
             <div key={index} className="border-2 border-gray-light p-4">
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-lg font-bold text-foreground">Step {index + 1}</h3>
-                <button
+                <Button
                   type="button"
                   onClick={() => removeStep(index)}
-                  className="px-3 py-1 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+                  variant="primary"
+                  size="sm"
                 >
                   REMOVE
-                </button>
+                </Button>
               </div>
               <div className="space-y-3">
                 <div>
@@ -199,13 +201,14 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
             </div>
           ))}
 
-          <button
+          <Button
             type="button"
             onClick={addStep}
-            className="w-full px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+            variant="primary"
+            fullWidth
           >
             ADD STEP
-          </button>
+          </Button>
         </div>
       </section>
 
@@ -230,13 +233,14 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
             <div key={index} className="border-2 border-gray-light p-4">
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-lg font-bold text-foreground">Rule {index + 1}</h3>
-                <button
+                <Button
                   type="button"
                   onClick={() => removeRule(index)}
-                  className="px-3 py-1 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+                  variant="primary"
+                  size="sm"
                 >
                   REMOVE
-                </button>
+                </Button>
               </div>
               <textarea
                 value={rule}
@@ -247,13 +251,14 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
             </div>
           ))}
 
-          <button
+          <Button
             type="button"
             onClick={addRule}
-            className="w-full px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+            variant="primary"
+            fullWidth
           >
             ADD RULE
-          </button>
+          </Button>
         </div>
       </section>
 
@@ -291,20 +296,20 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
       </section>
 
       <div className="flex justify-end gap-4">
-        <button
+        <Button
           type="button"
           onClick={() => router.push('/admin')}
-          className="px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+          variant="primary"
         >
           CANCEL
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
           disabled={saving}
-          className="px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+          variant="primary"
         >
           {saving ? 'SAVING...' : 'SAVE SETTINGS'}
-        </button>
+        </Button>
       </div>
     </form>
   )

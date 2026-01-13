@@ -44,3 +44,32 @@ a:hover {
 a:visited {
   color: var(--teal);
 }
+
+/* React Flow Controls styling */
+.react-flow__controls {
+  box-shadow: none !important;
+}
+
+.react-flow__controls-button {
+  background: #2b2b2b !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.react-flow__controls-button:hover {
+  background: #ffffff !important;
+  color: #2b2b2b !important;
+}
+
+.react-flow__controls-button svg {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+}

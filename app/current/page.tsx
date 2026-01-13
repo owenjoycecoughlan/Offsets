@@ -10,7 +10,7 @@ export default async function CurrentIterationPage() {
     <div className="min-h-screen bg-background">
       <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/" className="text-purple-dark hover:text-foreground">
+          <Link href="/" className="text-teal hover:text-foreground">
             ← Back to home
           </Link>
         </div>
@@ -18,23 +18,23 @@ export default async function CurrentIterationPage() {
         <header className="mb-8">
           <h1 className="text-4xl font-serif text-foreground mb-2">
             {activeIteration.name}
-            <span className="ml-3 text-base px-3 py-1 bg-purple-dark text-white rounded">
+            <span className="ml-3 text-base px-3 py-1 bg-background text-foreground border-2 border-foreground font-bold uppercase">
               Active
             </span>
           </h1>
           {activeIteration.description && (
-            <p className="text-purple-muted mb-4">{activeIteration.description}</p>
+            <p className="text-gray-mid mb-4">{activeIteration.description}</p>
           )}
           <div className="flex gap-4 items-center">
             <Link
               href="/current"
-              className="text-sm px-4 py-2 bg-purple-dark text-white rounded-lg"
+              className="text-sm px-4 py-2 bg-teal text-background font-bold"
             >
               List View
             </Link>
             <Link
               href="/current/tree"
-              className="text-sm px-4 py-2 border border-gray-light text-foreground rounded-lg hover:bg-background"
+              className="text-sm px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
             >
               Tree View
             </Link>
@@ -57,24 +57,25 @@ export default async function CurrentIterationPage() {
                   <Link
                     key={node.id}
                     href={`/node/${node.id}`}
-                    className="block bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow border border-gray-light"
+                    className="block p-6 border-2 border-yellow-border hover:border-teal transition-colors"
+                    style={{ backgroundColor: '#3a3a3a' }}
                   >
                     <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-sm font-medium text-purple-muted">
+                      <h3 className="text-sm font-medium text-gray-mid">
                         Node #{node.id.slice(0, 8)}
                       </h3>
-                      <div className="text-sm text-purple-muted">
+                      <div className="text-sm text-gray-mid">
                         {daysRemaining > 0 ? (
                           <span>{daysRemaining} day{daysRemaining !== 1 ? 's' : ''} until withering</span>
                         ) : (
-                          <span className="text-purple-dark">Withering soon</span>
+                          <span className="text-teal">Withering soon</span>
                         )}
                       </div>
                     </div>
                     <p className="text-foreground leading-relaxed whitespace-pre-wrap">
                       {excerpt}
                     </p>
-                    <div className="mt-4 text-sm text-purple-muted">
+                    <div className="mt-4 text-sm text-gray-mid">
                       {node._count.children} {node._count.children === 1 ? 'response' : 'responses'}
                     </div>
                   </Link>

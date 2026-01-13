@@ -48,7 +48,7 @@ export default function NewIterationButton() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-purple-dark text-white rounded-lg hover:bg-foreground transition-colors"
+        className="px-4 py-2 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
       >
         Start New Iteration
       </button>
@@ -94,7 +94,7 @@ export default function NewIterationButton() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-purple-dark text-white py-2 px-4 rounded-lg hover:bg-foreground disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
+              className="flex-1 bg-teal text-background py-2 px-4 border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? 'Creating...' : 'Create'}
             </button>
@@ -102,7 +102,7 @@ export default function NewIterationButton() {
               type="button"
               onClick={() => setIsOpen(false)}
               disabled={isSubmitting}
-              className="px-4 py-2 border border-gray-light text-foreground rounded-lg hover:bg-background transition-colors"
+              className="px-4 py-2 border-2 border-yellow-border text-foreground font-bold hover:bg-gray-light transition-colors"
             >
               Cancel
             </button>

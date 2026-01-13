@@ -167,7 +167,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
                 <button
                   type="button"
                   onClick={() => removeStep(index)}
-                  className="px-3 py-1 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light transition-colors"
+                  className="px-3 py-1 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
                 >
                   REMOVE
                 </button>
@@ -202,7 +202,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
           <button
             type="button"
             onClick={addStep}
-            className="w-full px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid transition-colors"
+            className="w-full px-6 py-3 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
           >
             ADD STEP
           </button>
@@ -233,7 +233,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
                 <button
                   type="button"
                   onClick={() => removeRule(index)}
-                  className="px-3 py-1 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light transition-colors"
+                  className="px-3 py-1 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
                 >
                   REMOVE
                 </button>
@@ -250,7 +250,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
           <button
             type="button"
             onClick={addRule}
-            className="w-full px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid transition-colors"
+            className="w-full px-6 py-3 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
           >
             ADD RULE
           </button>
@@ -294,14 +294,14 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
         <button
           type="button"
           onClick={() => router.push('/admin')}
-          className="px-6 py-3 bg-white text-foreground border-2 border-foreground font-bold hover:bg-gray-light transition-colors"
+          className="px-6 py-3 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
         >
           CANCEL
         </button>
         <button
           type="submit"
           disabled={saving}
-          className="px-6 py-3 bg-foreground text-white border-2 border-foreground font-bold hover:bg-gray-mid disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
         >
           {saving ? 'SAVING...' : 'SAVE SETTINGS'}
         </button>

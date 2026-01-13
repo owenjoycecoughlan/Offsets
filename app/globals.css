@@ -45,6 +45,10 @@ a:visited {
   color: var(--teal);
 }
 
+a.no-underline {
+  text-decoration: none !important;
+}
+
 /* React Flow Controls styling */
 .react-flow__controls {
   box-shadow: none !important;

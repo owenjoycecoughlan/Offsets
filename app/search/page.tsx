@@ -56,19 +56,19 @@ export default function SearchPage() {
     <div className="min-h-screen bg-background">
       <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/" className="text-purple-dark hover:text-foreground">
+          <Link href="/" className="text-teal hover:text-foreground">
             ← Back to home
           </Link>
         </div>
 
         <header className="mb-8">
           <h1 className="text-4xl font-serif text-foreground mb-2">Search Nodes</h1>
-          <p className="text-purple-muted">
+          <p className="text-gray-mid">
             Search through all nodes by content or author name
           </p>
         </header>
 
-        <div className="bg-white p-6 rounded-lg shadow border border-gray-light mb-8">
+        <div className="p-6 border border-gray-light mb-8" style={{ backgroundColor: '#3a3a3a' }}>
           <div className="space-y-4">
             <div>
               <label htmlFor="query" className="block text-sm font-medium text-foreground mb-2">
@@ -80,7 +80,7 @@ export default function SearchPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent"
+                className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
                 placeholder="Enter keywords, author name, or text..."
               />
             </div>
@@ -93,7 +93,7 @@ export default function SearchPage() {
                 id="status"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as 'ALL' | NodeStatus)}
-                className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent"
+                className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
               >
                 <option value="ALL">All nodes</option>
                 <option value="LIVE">Live only</option>
@@ -104,9 +104,9 @@ export default function SearchPage() {
             <button
               onClick={handleSearch}
               disabled={isSearching || !query.trim()}
-              className="w-full bg-purple-dark text-white py-3 px-6 rounded-lg font-medium hover:bg-foreground disabled:bg-gray-light disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-background text-teal py-3 px-6 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
             >
-              {isSearching ? 'Searching...' : 'Search'}
+              {isSearching ? 'SEARCHING...' : 'SEARCH'}
             </button>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function SearchPage() {
             </h2>
 
             {results.length === 0 ? (
-              <p className="text-purple-muted italic">No results found</p>
+              <p className="text-gray-mid italic">No results found</p>
             ) : (
               <div className="space-y-4">
                 {results.map((node) => {
@@ -128,16 +128,17 @@ export default function SearchPage() {
                     <Link
                       key={node.id}
                       href={`/node/${node.id}`}
-                      className="block bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow border border-gray-light"
+                      className="block p-6 border border-gray-light hover:border-teal transition-colors no-underline"
+                      style={{ backgroundColor: '#3a3a3a' }}
                     >
                       <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-sm font-medium text-purple-muted">
+                        <h3 className="text-sm font-medium text-gray-mid">
                           Node #{node.id.slice(0, 8)}
                         </h3>
-                        <span className={`text-xs px-2 py-1 rounded ${
+                        <span className={`text-xs px-2 py-1 font-bold ${
                           node.status === 'LIVE'
-                            ? 'bg-purple-dark/20 text-purple-dark'
-                            : 'bg-gray-light text-purple-muted'
+                            ? 'text-teal'
+                            : 'text-gray-mid'
                         }`}>
                           {node.status}
                         </span>
@@ -146,11 +147,11 @@ export default function SearchPage() {
                         {excerpt}
                       </p>
                       {node.status === NodeStatus.WITHERED && (
-                        <p className="text-sm text-purple-muted">
+                        <p className="text-sm text-gray-mid">
                           by {node.authorName}
                         </p>
                       )}
-                      <p className="text-sm text-purple-muted mt-2">
+                      <p className="text-sm text-gray-mid mt-2">
                         {node._count.children} {node._count.children === 1 ? 'response' : 'responses'}
                       </p>
                     </Link>

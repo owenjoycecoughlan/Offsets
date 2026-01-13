@@ -52,7 +52,7 @@ a:visited {
 
 .react-flow__controls-button {
   background: #2b2b2b !important;
-  border: 2px solid #ffffff !important;
+  border: 2px solid #f4e4a6 !important;
   color: #ffffff !important;
   width: 32px !important;
   height: 32px !important;
@@ -63,7 +63,7 @@ a:visited {
 }
 
 .react-flow__controls-button:hover {
-  background: #ffffff !important;
+  background: #f4e4a6 !important;
   color: #2b2b2b !important;
 }
 

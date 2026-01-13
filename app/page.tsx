@@ -44,7 +44,7 @@ export default async function Home() {
               </Link>
               <Link
                 href="/current/tree"
-                className="px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+                className="px-8 py-4 bg-background text-teal border-2 border-teal font-bold text-lg hover:bg-teal hover:text-background transition-colors"
               >
                 VIEW TREE
               </Link>

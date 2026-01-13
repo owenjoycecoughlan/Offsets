@@ -6,6 +6,7 @@
   --teal: #00cccc;
   --teal-dark: #008b8b;
   --yellow-border: #f4e4a6;
+  --green-border: #b8e994;
   --gray-mid: #999999;
   --gray-light: #666666;
 }
@@ -16,6 +17,7 @@
   --color-teal: var(--teal);
   --color-teal-dark: var(--teal-dark);
   --color-yellow-border: var(--yellow-border);
+  --color-green-border: var(--green-border);
   --color-gray-mid: var(--gray-mid);
   --color-gray-light: var(--gray-light);
   --font-sans: var(--font-geist-sans);

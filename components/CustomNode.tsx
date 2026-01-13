@@ -29,10 +29,12 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
     setIsModalOpen(true)
   }
 
+  const borderColor = isLive ? 'border-green-border' : 'border-yellow-border'
+
   return (
     <>
       <div
-        className="border-2 border-yellow-border bg-background cursor-pointer hover:border-teal transition-colors"
+        className={`border-2 ${borderColor} bg-background cursor-pointer hover:border-teal transition-colors`}
         onClick={handleClick}
         onMouseDown={(e) => e.stopPropagation()}
         style={{

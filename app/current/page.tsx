@@ -28,7 +28,7 @@ export default async function CurrentIterationPage() {
           <div className="flex gap-4 items-center">
             <Link
               href="/current"
-              className="px-4 py-2 bg-teal text-background border-2 border-teal font-bold no-underline"
+              className="px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors no-underline"
             >
               List View
             </Link>

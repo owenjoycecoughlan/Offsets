@@ -33,7 +33,7 @@ export default async function CurrentTreeViewPage() {
             </Link>
             <Link
               href="/current/tree"
-              className="px-4 py-2 bg-teal text-background border-2 border-teal font-bold no-underline"
+              className="px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors no-underline"
             >
               Tree View
             </Link>

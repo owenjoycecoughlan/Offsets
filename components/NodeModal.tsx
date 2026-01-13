@@ -69,7 +69,7 @@ export default function NodeModal({
           {isLive && (
             <Link
               href={`/node/${nodeId}`}
-              className="block w-full py-3 px-6 bg-teal text-background border-2 border-teal font-bold text-center hover:bg-teal-dark hover:border-teal-dark transition-colors"
+              className="block w-full py-3 px-6 bg-background text-teal border-2 border-teal font-bold text-center hover:bg-teal hover:text-background transition-colors"
             >
               CONTRIBUTE
             </Link>

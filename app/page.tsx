@@ -27,7 +27,7 @@ export default async function Home() {
             <div className="mb-4">
               <h2 className="text-3xl font-bold text-foreground mb-2">
                 {activeIteration.name}
-                <span className="ml-3 text-sm px-3 py-1 bg-foreground text-white font-bold uppercase">
+                <span className="ml-3 text-sm px-3 py-1 bg-background text-foreground border-2 border-foreground font-bold uppercase">
                   NOW ACTIVE
                 </span>
               </h2>
@@ -38,13 +38,13 @@ export default async function Home() {
             <div className="flex gap-4 mt-6 flex-wrap">
               <Link
                 href="/current"
-                className="px-8 py-4 bg-foreground text-white border-2 border-foreground font-bold text-lg hover:bg-gray-mid transition-colors"
+                className="px-8 py-4 bg-background text-teal border-2 border-teal font-bold text-lg hover:bg-teal hover:text-background transition-colors"
               >
                 PARTICIPATE NOW
               </Link>
               <Link
                 href="/current/tree"
-                className="px-6 py-3 border-2 border-foreground text-foreground hover:bg-gray-mid hover:text-white transition-colors font-bold"
+                className="px-6 py-3 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
               >
                 VIEW TREE
               </Link>

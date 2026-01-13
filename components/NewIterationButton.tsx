@@ -48,7 +48,7 @@ export default function NewIterationButton() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-teal text-background border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark transition-colors"
+        className="px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
       >
         Start New Iteration
       </button>
@@ -94,7 +94,7 @@ export default function NewIterationButton() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-teal text-background py-2 px-4 border-2 border-teal font-bold hover:bg-teal-dark hover:border-teal-dark disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
+              className="flex-1 bg-background text-teal py-2 px-4 border-2 border-teal font-bold hover:bg-teal hover:text-background disabled:bg-gray-light disabled:border-gray-light disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? 'Creating...' : 'Create'}
             </button>

@@ -21,30 +21,30 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
     <div className="min-h-screen bg-background">
       <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/" className="text-purple-dark hover:text-foreground">
+          <Link href="/current" className="text-teal hover:text-foreground">
             ← Back to live nodes
           </Link>
         </div>
 
         {/* Parent Node (if exists) */}
         {node.parent && (
-          <section className="mb-8 bg-gray-light/30 p-6 rounded-lg border border-gray-light">
+          <section className="mb-8 p-6 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
             <div className="flex justify-between items-start mb-3">
-              <h3 className="text-sm font-medium text-purple-muted">
+              <h3 className="text-sm font-medium text-gray-mid">
                 Parent Node #{node.parent.id.slice(0, 8)}
               </h3>
               <Link
                 href={`/node/${node.parent.id}`}
-                className="text-sm text-purple-dark hover:text-foreground"
+                className="text-sm text-teal hover:text-foreground no-underline"
               >
                 View full node →
               </Link>
             </div>
-            <p className="text-purple-dark leading-relaxed whitespace-pre-wrap">
+            <p className="text-foreground leading-relaxed whitespace-pre-wrap">
               {node.parent.content}
             </p>
             {node.parent.status === NodeStatus.WITHERED && (
-              <p className="mt-3 text-sm text-purple-muted">
+              <p className="mt-3 text-sm text-gray-mid">
                 by {node.parent.authorName}
               </p>
             )}
@@ -52,7 +52,7 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
         )}
 
         {/* Current Node */}
-        <section className="mb-8 bg-white p-8 rounded-lg shadow border border-gray-light">
+        <section className="mb-8 p-8 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
           <div className="flex justify-between items-start mb-4">
             <h2 className="text-2xl font-serif text-foreground">
               Node #{node.id.slice(0, 8)}
@@ -68,10 +68,10 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
 
           {node.status === NodeStatus.WITHERED && (
             <div className="mt-6 pt-6 border-t border-gray-light">
-              <p className="text-purple-dark">
+              <p className="text-foreground">
                 <span className="font-medium">Author:</span> {node.authorName}
               </p>
-              <p className="text-sm text-purple-muted mt-1">
+              <p className="text-sm text-gray-mid mt-1">
                 This node withered on {node.witheredAt ? new Date(node.witheredAt).toLocaleDateString() : 'unknown date'}
               </p>
             </div>
@@ -87,13 +87,14 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
                   <Link
                     key={child.id}
                     href={`/node/${child.id}`}
-                    className="block p-4 bg-background rounded hover:bg-gray-light/30 transition-colors"
+                    className="block p-4 border border-gray-light hover:border-teal transition-colors no-underline"
+                    style={{ backgroundColor: '#2b2b2b' }}
                   >
                     <p className="text-foreground line-clamp-2">
                       {child.content.slice(0, 120)}...
                     </p>
                     {child.status === NodeStatus.WITHERED && (
-                      <p className="text-sm text-purple-muted mt-1">
+                      <p className="text-sm text-gray-mid mt-1">
                         by {child.authorName}
                       </p>
                     )}
@@ -106,7 +107,7 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
 
         {/* Response Form */}
         {canRespond && (
-          <section className="bg-white p-8 rounded-lg shadow border border-gray-light">
+          <section className="p-8 border border-gray-light" style={{ backgroundColor: '#3a3a3a' }}>
             <h3 className="text-xl font-serif text-foreground mb-4">
               {settings.contributionHeading}
             </h3>
@@ -115,8 +116,8 @@ export default async function NodePage({ params }: { params: Promise<{ id: strin
         )}
 
         {!canRespond && node.status === NodeStatus.WITHERED && (
-          <div className="bg-purple-muted/20 border border-purple-muted p-4 rounded-lg text-center">
-            <p className="text-purple-dark">
+          <div className="border-2 border-yellow-border p-4 text-center" style={{ backgroundColor: '#3a3a3a' }}>
+            <p className="text-foreground">
               {settings.contributionWitheredMessage}
             </p>
           </div>

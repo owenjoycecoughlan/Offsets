@@ -28,13 +28,13 @@ export default async function CurrentIterationPage() {
           <div className="flex gap-4 items-center">
             <Link
               href="/current"
-              className="text-sm px-4 py-2 bg-teal text-background font-bold"
+              className="px-4 py-2 bg-teal text-background border-2 border-teal font-bold hover:bg-background hover:text-teal transition-colors"
             >
               List View
             </Link>
             <Link
               href="/current/tree"
-              className="text-sm px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
+              className="px-4 py-2 bg-background text-teal border-2 border-teal font-bold hover:bg-teal hover:text-background transition-colors"
             >
               Tree View
             </Link>
@@ -57,7 +57,7 @@ export default async function CurrentIterationPage() {
                   <Link
                     key={node.id}
                     href={`/node/${node.id}`}
-                    className="block p-6 border-2 border-yellow-border hover:border-teal transition-colors"
+                    className="block p-6 border border-gray-light hover:border-teal transition-colors no-underline"
                     style={{ backgroundColor: '#3a3a3a' }}
                   >
                     <div className="flex justify-between items-start mb-3">
@@ -65,11 +65,7 @@ export default async function CurrentIterationPage() {
                         Node #{node.id.slice(0, 8)}
                       </h3>
                       <div className="text-sm text-gray-mid">
-                        {daysRemaining > 0 ? (
-                          <span>{daysRemaining} day{daysRemaining !== 1 ? 's' : ''} until withering</span>
-                        ) : (
-                          <span className="text-teal">Withering soon</span>
-                        )}
+                        <span>{daysRemaining} day{daysRemaining !== 1 ? 's' : ''} until withering</span>
                       </div>
                     </div>
                     <p className="text-foreground leading-relaxed whitespace-pre-wrap">

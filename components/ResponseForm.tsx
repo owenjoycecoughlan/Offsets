@@ -66,7 +66,7 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
           id="authorName"
           value={authorName}
           onChange={(e) => setAuthorName(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent"
+          className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none"
           placeholder="Jane Doe"
           disabled={isSubmitting}
         />
@@ -81,17 +81,17 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={8}
-          className="w-full px-4 py-2 border border-gray-light rounded-lg focus:ring-2 focus:ring-purple-dark focus:border-transparent font-serif resize-y"
+          className="w-full px-4 py-2 bg-background text-foreground border-2 border-gray-light focus:border-teal focus:outline-none font-serif resize-y"
           placeholder="Write your creative response here..."
           disabled={isSubmitting}
         />
-        <p className="text-sm text-purple-muted mt-1">
+        <p className="text-sm text-gray-mid mt-1">
           No length limit. Let your creativity flow.
         </p>
       </div>
 
       {error && (
-        <div className="bg-purple-muted/20 border border-purple-dark text-purple-dark px-4 py-3 rounded">
+        <div className="border-2 border-red-border text-foreground px-4 py-3" style={{ backgroundColor: '#3a3a3a' }}>
           {error}
         </div>
       )}
@@ -104,7 +104,7 @@ export default function ResponseForm({ parentId }: ResponseFormProps) {
         {isSubmitting ? 'SUBMITTING...' : 'SUBMIT CONTRIBUTION'}
       </button>
 
-      <p className="text-sm text-purple-muted text-center">
+      <p className="text-sm text-gray-mid text-center">
         Your response will be reviewed and published once approved by the admin.
       </p>
     </form>

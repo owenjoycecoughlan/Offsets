@@ -177,7 +177,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
             target: node.id,
             type: 'straight',
             animated: false,
-            style: { stroke: '#222222', strokeWidth: 2 },
+            style: { stroke: '#f4e4a6', strokeWidth: 2 },
           }
         }
 
@@ -210,7 +210,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
           type: 'straight',
           animated: false,
           style: {
-            stroke: '#222222',
+            stroke: '#f4e4a6',
             strokeWidth: 2,
           },
         }
@@ -248,7 +248,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
   if (loading) {
     return (
-      <div className="w-full h-[600px] bg-white border-2 border-foreground flex items-center justify-center">
+      <div className="w-full h-[600px] bg-background border-2 border-yellow-border flex items-center justify-center">
         <div className="text-gray-mid">Loading tree visualization...</div>
       </div>
     )
@@ -256,7 +256,7 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
   if (error) {
     return (
-      <div className="w-full h-[600px] bg-white border-2 border-foreground flex items-center justify-center">
+      <div className="w-full h-[600px] bg-background border-2 border-yellow-border flex items-center justify-center">
         <div className="text-foreground">{error}</div>
       </div>
     )
@@ -264,14 +264,14 @@ export default function TreeView({ iterationId }: TreeViewProps) {
 
   if (nodes.length === 0) {
     return (
-      <div className="w-full h-[600px] bg-white border-2 border-foreground flex items-center justify-center">
+      <div className="w-full h-[600px] bg-background border-2 border-yellow-border flex items-center justify-center">
         <div className="text-gray-mid">No nodes to display</div>
       </div>
     )
   }
 
   return (
-    <div className="w-full h-[600px] bg-white border-2 border-foreground">
+    <div className="w-full h-[600px] bg-background border-2 border-yellow-border">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -288,10 +288,10 @@ export default function TreeView({ iterationId }: TreeViewProps) {
           type: 'straight',
         }}
       >
-        <Background color="#aaaaaa" gap={16} />
+        <Background color="#666666" gap={16} />
         <Controls />
         <MiniMap
-          nodeColor={() => '#222222'}
+          nodeColor={() => '#f4e4a6'}
           pannable={true}
           zoomable={true}
         />

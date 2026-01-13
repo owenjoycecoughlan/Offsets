@@ -32,7 +32,7 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
   return (
     <>
       <div
-        className="border-2 border-foreground bg-white cursor-pointer hover:border-gray-mid transition-colors"
+        className="border-2 border-yellow-border bg-background cursor-pointer hover:border-teal transition-colors"
         onClick={handleClick}
         onMouseDown={(e) => e.stopPropagation()}
         style={{

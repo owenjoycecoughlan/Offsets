@@ -49,6 +49,15 @@ a.no-underline {
   text-decoration: none !important;
 }
 
+/* Override visited link colors for button-styled links */
+a.text-teal:visited {
+  color: var(--teal) !important;
+}
+
+a.text-background:visited {
+  color: var(--background) !important;
+}
+
 /* React Flow Controls styling */
 .react-flow__controls {
   box-shadow: none !important;
